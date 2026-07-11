@@ -5,15 +5,15 @@ let currentAbortController = null;
 
 async function fetchAPI(action, payload = null, method = 'GET') {
   if (currentAbortController && method === 'GET') {
-    currentAbortController.abort(); // 기존 진행중인 GET 요청 취소
+    currentAbortController.abort();
   }
   
   currentAbortController = new AbortController();
   const signal = currentAbortController.signal;
 
   try {
-    // 💡 여기를 GAS_URL에서 API_URL로 수정했습니다!
-    let url = `${API_URL}?action=${action}`;
+    // 2. 아래 부분을 반드시 API_URL로 수정해야 합니다
+    let url = `${API_URL}?action=${action}`; 
     let options = { method, signal };
 
     if (method === 'GET' && payload) {
@@ -21,7 +21,7 @@ async function fetchAPI(action, payload = null, method = 'GET') {
       url += `&${params.toString()}`;
     } else if (method === 'POST') {
       options.body = JSON.stringify(payload);
-      options.headers = { 'Content-Type': 'text/plain' }; // GAS CORS 회피용
+      options.headers = { 'Content-Type': 'text/plain' };
     }
 
     const response = await fetch(url, options);
