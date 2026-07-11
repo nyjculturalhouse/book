@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소소책방 | 로그인</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/api.js" defer></script>
+  <script src="./js/ui.js" defer></script>
+  <script src="./js/auth.js" defer></script>
+</head>
+<body class="bg-surface flex items-center justify-center min-h-screen font-pretendard text-onSurface">
+  <main class="bg-container p-8 rounded-xl shadow-soft w-full max-w-sm slide-up">
+    <div class="text-center mb-8">
+      <h1 class="text-2xl font-bold tracking-tight mb-2">📚 소소책방</h1>
+      <p class="text-sm text-gray-500">사내 도서대여 시스템</p>
+    </div>
+    <form id="loginForm" class="flex flex-col gap-4">
+      <div>
+        <input type="text" id="userId" placeholder="아이디" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+      </div>
+      <div>
+        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+      </div>
+      <button type="submit" id="loginBtn" class="w-full h-12 bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors mt-2 flex items-center justify-center">
+        로그인
+      </button>
+    </form>
+  </main>
+  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+</body>
+</html>
