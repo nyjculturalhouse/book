@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소소책방</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: { DEFAULT: "#111111", hover: "#222222" },
-                        accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
-                        surface: "#F4F4F3", container: "#FFFFFF"
-                    }
-                }
-            }
-        }
-    </script>
-    <style>body { font-family: 'Pretendard', sans-serif; }</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소소책방 | 홈</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
 </head>
-<body class="bg-surface text-onSurface">
-    <header class="p-6 bg-container shadow-soft">
-        <h1 class="text-2xl font-bold">소소책방</h1>
-    </header>
-    <main id="app" class="p-6">
-        <!-- 콘텐츠 로딩 영역 -->
-    </main>
-    <script type="module" src="js/app.js"></script>
+<body class="bg-surface text-onSurface font-pretendard">
+  <!-- Header -->
+  <header class="bg-container shadow-soft sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="text-xl font-bold tracking-tight">소소책방</a>
+      <nav class="hidden md:flex gap-6 font-medium text-sm">
+        <a href="index.html" class="hover:text-accent-bg transition-colors">홈</a>
+        <a href="books.html" class="hover:text-accent-bg transition-colors">도서대여</a>
+        <a href="rentals.html" class="hover:text-accent-bg transition-colors">대여현황</a>
+        <a href="profile.html" class="hover:text-accent-bg transition-colors">내정보</a>
+        <button id="logoutBtn" class="text-gray-500 hover:text-red-500 transition-colors">로그아웃</button>
+      </nav>
+      <!-- Mobile menu button omitted for brevity -->
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 py-8">
+    <!-- Search Bar -->
+    <section class="mb-12">
+      <form id="homeSearchForm" class="relative group">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-accent-bg transition-colors">search</span>
+        <input type="text" id="homeSearchInput" placeholder="도서명, 저자, 출판사, ISBN 검색" class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none focus:ring-2 focus:ring-accent-bg transition-all outline-none">
+      </form>
+    </section>
+
+    <!-- New Books -->
+    <section class="mb-12">
+      <div class="flex justify-between items-end mb-6">
+        <h2 class="text-2xl font-bold">신간도서</h2>
+        <a href="books.html?sort=new" class="text-sm text-gray-500 hover:text-primary">전체보기</a>
+      </div>
+      <div id="newBooksContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Skeleton loaded via JS -->
+      </div>
+    </section>
+
+    <!-- Popular Books -->
+    <section>
+      <h2 class="text-2xl font-bold mb-6">인기도서 TOP 5</h2>
+      <div id="popularBooksContainer" class="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <!-- Skeleton loaded via JS -->
+      </div>
+    </section>
+  </main>
+  
+  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
 </body>
 </html>
