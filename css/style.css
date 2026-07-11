@@ -1,35 +1,127 @@
-body { font-family: 'Pretendard', sans-serif; -webkit-font-smoothing: antialiased; }
+/* =========================================================
+   소소책방 공통 스타일
+   Tailwind로 표현하기 어려운 애니메이션 / 토스트 / 모달 / 스켈레톤만 정의
+========================================================= */
 
-/* Custom Tailwind Config (Injected safely) */
-:root {
-  --tw-bg-surface: #F4F4F3;
-  --tw-bg-container: #FFFFFF;
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Animations */
-.fade-in { animation: fadeIn 0.3s ease-in-out; }
-.slide-up { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+body {
+  -webkit-font-smoothing: antialiased;
+}
 
+/* ---------- 공통 트랜지션 애니메이션 (200~300ms) ---------- */
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(14px); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
 }
 
-/* Skeleton */
+.fade-in  { animation: fadeIn 0.25s ease forwards; }
+.fade-out { animation: fadeOut 0.2s ease forwards; }
+.slide-up { animation: slideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.slide-down { animation: slideDown 0.2s ease forwards; }
+
+/* ---------- 카드 Hover 애니메이션 ---------- */
+.book-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- 버튼 공통 Hover ---------- */
+button {
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+}
+button:active {
+  transform: scale(0.97);
+}
+
+/* ---------- Toast ---------- */
+#toastContainer {
+  pointer-events: none;
+}
+.toast {
+  pointer-events: auto;
+  animation: toastIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  min-width: 220px;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.leaving {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+/* ---------- Skeleton Loading ---------- */
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  background: linear-gradient(90deg, #ececeb 25%, #f6f6f5 37%, #ececeb 63%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 10px;
 }
 
-/* Cards Hover */
-.book-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.book-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  animation: fadeIn 0.2s ease forwards;
+}
+.modal-box {
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ---------- 스크롤바 ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #d9d9d7;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- line-clamp fallback (구형 브라우저 대비) ---------- */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---------- 포커스 접근성 ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #ff5a36;
+  outline-offset: 2px;
+}
