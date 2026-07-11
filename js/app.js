@@ -1,77 +1,124 @@
-// tailwind config injection
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: { DEFAULT: "#111111", hover: "#222222" },
-        accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
-        surface: "#F4F4F3",
-        container: "#FFFFFF",
-        onSurface: "#111111"
-      },
-      boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-      borderRadius: { xl: "18px" }
-    }
-  }
-};
+/* =========================================================
+   소소책방 공통 앱 스크립트
+   - 로그인 가드 (비로그인 시 로그인 페이지로 이동)
+   - 로그아웃 처리
+   - 홈 화면(index.html) 데이터 렌더링
+   모든 페이지에서 가장 먼저 로드된다.
+========================================================= */
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // 인증 체크
+(function authGuard() {
+  const isLoginPage = location.pathname.endsWith('login.html');
   const user = JSON.parse(localStorage.getItem('sosoUser') || 'null');
-  if (!user && !window.location.pathname.includes('login.html')) {
-    window.location.href = 'login.html';
-    return;
-  }
 
-  // 로그아웃 이벤트 바인딩
+  if (!user && !isLoginPage) {
+    location.href = 'login.html';
+  }
+  if (user && isLoginPage) {
+    location.href = 'index.html';
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ---------- 로그아웃 ----------
   const logoutBtn = document.getElementById('logoutBtn');
-  if(logoutBtn) {
-    logoutBtn.onclick = () => {
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('sosoUser');
-      window.location.href = 'login.html';
-    };
-  }
-
-  // 홈 화면 데이터 로드
-  if (document.getElementById('newBooksContainer')) {
-    await loadHomeData();
-    
-    document.getElementById('homeSearchForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = document.getElementById('homeSearchInput').value;
-      window.location.href = `books.html?q=${encodeURIComponent(q)}`;
+      location.href = 'login.html';
     });
   }
+
+  // ---------- 홈 상단 검색창 (index.html) ----------
+  const homeSearchForm = document.getElementById('homeSearchForm');
+  if (homeSearchForm) {
+    homeSearchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const q = document.getElementById('homeSearchInput').value.trim();
+      location.href = q ? `books.html?q=${encodeURIComponent(q)}` : 'books.html';
+    });
+  }
+
+  // ---------- 홈 데이터 렌더링 (index.html에서만 실행) ----------
+  const newBooksList = document.getElementById('newBooksList');
+  if (!newBooksList) return;
+
+  loadHomeData();
 });
 
 async function loadHomeData() {
-  const newContainer = document.getElementById('newBooksContainer');
-  const popContainer = document.getElementById('popularBooksContainer');
-  
-  newContainer.innerHTML = UI.renderBookSkeleton(8);
-  popContainer.innerHTML = UI.renderBookSkeleton(5);
+  const newBooksList = document.getElementById('newBooksList');
+  const popularBooksList = document.getElementById('popularBooksList');
+  const categoryList = document.getElementById('categoryList');
+
+  newBooksList.innerHTML = UI.renderBookSkeleton(8);
+  popularBooksList.innerHTML = `
+    <div class="flex flex-col gap-3">
+      ${Array(5).fill('<div class="h-16 w-full skeleton"></div>').join('')}
+    </div>
+  `;
 
   try {
-    const data = await fetchAPI('getHomeData');
-    if(!data) return; // aborted
+    const data = await fetchAPI('getHome', {});
+    if (!data) return;
 
-    newContainer.innerHTML = data.newBooks.map(renderMiniBookCard).join('');
-    popContainer.innerHTML = data.popularBooks.map(renderMiniBookCard).join('');
-  } catch (e) {
-    UI.showToast('데이터를 불러오는데 실패했습니다.', 'error');
+    // 신간 도서 8권
+    if (!data.newBooks || data.newBooks.length === 0) {
+      newBooksList.innerHTML = '<div class="col-span-full text-center text-gray-400 py-12">등록된 도서가 없습니다.</div>';
+    } else {
+      newBooksList.innerHTML = data.newBooks.map(renderBookCard).join('');
+    }
+
+    // 인기 도서 TOP5
+    if (!data.popularBooks || data.popularBooks.length === 0) {
+      popularBooksList.innerHTML = '<div class="text-center text-gray-400 py-8">대여 데이터가 아직 없습니다.</div>';
+    } else {
+      popularBooksList.innerHTML = data.popularBooks.map((book, idx) => `
+        <a href="books.html?q=${encodeURIComponent(book['도서명'])}" class="flex items-center gap-4 bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-shadow slide-up">
+          <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-accent-bg' : 'text-gray-300'}">${idx + 1}</span>
+          <img src="${book['표지URL']}" loading="lazy" class="w-10 h-14 object-cover rounded bg-surface shrink-0">
+          <div class="flex-1 min-w-0">
+            <h4 class="text-sm font-bold truncate">${book['도서명']}</h4>
+            <p class="text-xs text-gray-500 truncate">${book['저자']}</p>
+          </div>
+          <span class="text-xs text-gray-400 shrink-0">대여 ${book['대여횟수']}회</span>
+        </a>
+      `).join('');
+    }
+
+    // 카테고리 바로가기
+    if (data.categories && data.categories.length > 0) {
+      categoryList.innerHTML = data.categories.map((cat) => `
+        <a href="books.html?category=${encodeURIComponent(cat)}" class="shrink-0 px-5 py-2.5 rounded-full bg-container shadow-soft text-sm font-bold hover:bg-primary hover:text-white transition-colors">
+          ${cat}
+        </a>
+      `).join('');
+    } else {
+      categoryList.innerHTML = '';
+    }
+  } catch (err) {
+    newBooksList.innerHTML = '<div class="col-span-full text-center text-red-400 py-12">도서 정보를 불러오는데 실패했습니다.</div>';
+    popularBooksList.innerHTML = '';
   }
 }
 
-function renderMiniBookCard(book) {
+function renderBookCard(book) {
+  const isAvail = book['상태'] === '대여가능';
   return `
-    <a href="books.html?q=${book['ISBN']}" class="book-card bg-container rounded-xl p-3 flex flex-col gap-2 cursor-pointer">
-      <div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden bg-surface">
-        <img src="${book['표지URL']}" loading="lazy" class="w-full h-full object-cover" alt="표지">
+    <div class="book-card bg-container rounded-xl overflow-hidden shadow-soft flex flex-col">
+      <div class="relative w-full aspect-[2/3] bg-surface">
+        <img src="${book['표지URL']}" loading="lazy" class="w-full h-full object-cover">
+        ${!isAvail ? `<div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold backdrop-blur-sm">대여중</div>` : ''}
       </div>
-      <div class="mt-1">
-        <h3 class="text-sm font-bold line-clamp-1">${book['도서명']}</h3>
-        <p class="text-xs text-gray-500 line-clamp-1">${book['저자']}</p>
+      <div class="p-4 flex flex-col flex-1 gap-1">
+        <span class="text-xs text-accent-bg font-bold">${book['카테고리'] || '일반'}</span>
+        <h3 class="text-md font-bold line-clamp-1">${book['도서명']}</h3>
+        <p class="text-xs text-gray-500 line-clamp-1">${book['저자']} | ${book['출판사']}</p>
+        <div class="mt-auto pt-4">
+          <a href="books.html?q=${encodeURIComponent(book['도서명'])}" class="block w-full text-center py-2.5 rounded-lg font-bold text-sm bg-surface hover:bg-gray-200 transition-colors">
+            자세히 보기
+          </a>
+        </div>
       </div>
-    </a>
+    </div>
   `;
 }
