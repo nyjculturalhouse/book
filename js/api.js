@@ -1,5 +1,5 @@
 // js/api.js - 중앙 집중식 API 핸들러
-const API_URL = 'https://script.google.com/macros/s/AKfycbzZbp24UapwuJ7WyTeRn9q3prOeQSdey2mPsV_EUjX0Lwn9x0hn1_0WmUyJMagbx1Ct/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxZ4dwowNFhbel7BefxftDMj5dPp8A3t51QKCn4C3Oqu0SkVSXz3g0zgYB2OmqlGw7S/exec';
 
 let currentAbortController = null;
 
@@ -12,7 +12,8 @@ async function fetchAPI(action, payload = null, method = 'GET') {
   const signal = currentAbortController.signal;
 
   try {
-    let url = `${GAS_URL}?action=${action}`;
+    // 💡 여기를 GAS_URL에서 API_URL로 수정했습니다!
+    let url = `${API_URL}?action=${action}`;
     let options = { method, signal };
 
     if (method === 'GET' && payload) {
@@ -37,4 +38,3 @@ async function fetchAPI(action, payload = null, method = 'GET') {
     throw error;
   }
 }
-
