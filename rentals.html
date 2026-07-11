@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소소책방 | 대여현황</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/app.js" defer></script>
+  <script src="./js/api.js" defer></script>
+  <script src="./js/ui.js" defer></script>
+  <script src="./js/utils.js" defer></script>
+  <script src="./js/rentals.js" defer></script>
+</head>
+<body class="bg-surface text-onSurface font-pretendard">
+  <!-- Header -->
+  <header class="bg-container shadow-soft sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="text-xl font-bold tracking-tight">📚 소소책방</a>
+      <nav class="hidden md:flex gap-6 font-medium text-sm">
+        <a href="index.html" class="hover:text-accent-bg transition-colors">홈</a>
+        <a href="books.html" class="hover:text-accent-bg transition-colors">도서대여</a>
+        <a href="rentals.html" class="text-accent-bg font-bold">대여현황</a>
+        <a href="profile.html" class="hover:text-accent-bg transition-colors">내정보</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-6">나의 대여 현황</h2>
+    
+    <!-- Tabs -->
+    <div class="flex gap-4 border-b border-gray-200 mb-6">
+      <button id="tab-current" class="pb-3 px-2 font-bold text-accent-bg border-b-2 border-accent-bg transition-colors">현재 대여</button>
+      <button id="tab-history" class="pb-3 px-2 font-medium text-gray-500 hover:text-primary transition-colors">대여 이력</button>
+    </div>
+
+    <!-- Content Containers -->
+    <div id="currentRentals" class="flex flex-col gap-4">
+      <!-- Skeletons / Current items will be injected -->
+    </div>
+    <div id="historyRentals" class="flex flex-col gap-4 hidden">
+      <!-- History items will be injected -->
+    </div>
+  </main>
+  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+</body>
+</html>
