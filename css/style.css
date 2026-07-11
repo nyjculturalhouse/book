@@ -1,9 +1,35 @@
-@keyframes skeleton-pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
+body { font-family: 'Pretendard', sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* Custom Tailwind Config (Injected safely) */
+:root {
+  --tw-bg-surface: #F4F4F3;
+  --tw-bg-container: #FFFFFF;
 }
+
+/* Animations */
+.fade-in { animation: fadeIn 0.3s ease-in-out; }
+.slide-up { animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Skeleton */
 .skeleton {
-  animation: skeleton-pulse 1.5s infinite;
-  background-color: #e5e7eb;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
 }
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Cards Hover */
+.book-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.book-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); }
