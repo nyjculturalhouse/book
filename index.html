@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소소책방</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: "#111111", hover: "#222222" },
+                        accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
+                        surface: "#F4F4F3", container: "#FFFFFF"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Pretendard', sans-serif; }</style>
+</head>
+<body class="bg-surface text-onSurface">
+    <header class="p-6 bg-container shadow-soft">
+        <h1 class="text-2xl font-bold">소소책방</h1>
+    </header>
+    <main id="app" class="p-6">
+        <!-- 콘텐츠 로딩 영역 -->
+    </main>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
