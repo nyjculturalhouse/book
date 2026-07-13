@@ -10,7 +10,7 @@ let isFetching = false;
 let hasMoreData = true;
 let currentCategory = null;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   if (!document.getElementById('booksList')) return;
 
   const searchInput = document.getElementById('searchInput');
@@ -126,19 +126,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observer.observe(document.getElementById('loadingTrigger'));
 
-  if (categorySelect) {
-
+if (categorySelect) {
   const homeData = await fetchAPI('getHome', {});
 
-  categorySelect.innerHTML = `
-    <option value="">전체 카테고리</option>
-    ${homeData.categories.map(cat => `
-      <option value="${cat}">${cat}</option>
-    `).join('')}
-  `;
-
-  if (currentCategory) {
-    categorySelect.value = currentCategory;
+  if (homeData && homeData.categories) {
+    categorySelect.innerHTML = `
+      <option value="">전체 카테고리</option>
+      ${homeData.categories.map(cat => `
+        <option value="${cat}" ${cat === currentCategory ? 'selected' : ''}>
+          ${cat}
+        </option>
+      `).join('')}
+    `;
   }
 }
    
