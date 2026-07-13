@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sortSelect = document.getElementById('sortSelect');
   const categorySelect = document.getElementById('categorySelect');
 
-  // 📌 '대여가능' 필터 버튼에 btn-bounce 클래스를 적용하고 기존 주황색을 차분한 세이지 그린 계열로 변경
+  // 📌 '대여가능' 필터 버튼에 btn-bounce 클래스를 적용하고 브랜드 컬러(세이지 그린) 시맨틱 클래스로 통일
   if (availableBtn) {
     availableBtn.classList.add('btn-bounce'); // 쫀득한 인터랙션 추가
 
@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 "text-gray-700"
             );
             availableBtn.classList.add(
-                "bg-[#4F7C6B]", // 오렌지 대신 새로운 브랜드 컬러인 Sage Green 매핑
+                "bg-accent-bg",
                 "text-white"
             );
         } else {
             availableBtn.classList.remove(
-                "bg-[#4F7C6B]",
+                "bg-accent-bg",
                 "text-white"
             );
             availableBtn.classList.add(
@@ -48,6 +48,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         loadBooks(true);
+    });
+  }
+
+  // 📌 카테고리 필터 뱃지 바 (선택된 카테고리를 안내하고 해제할 수 있는 UI)
+  const categoryFilterBar = document.getElementById('categoryFilterBar');
+  const categoryFilterLabel = document.getElementById('categoryFilterLabel');
+  const clearCategoryBtn = document.getElementById('clearCategoryBtn');
+
+  const updateCategoryFilterBar = () => {
+    if (!categoryFilterBar) return;
+    if (currentCategory) {
+      categoryFilterLabel.textContent = currentCategory;
+      categoryFilterBar.classList.remove('hidden');
+    } else {
+      categoryFilterBar.classList.add('hidden');
+    }
+  };
+
+  if (clearCategoryBtn) {
+    clearCategoryBtn.addEventListener('click', () => {
+      currentCategory = null;
+      if (categorySelect) categorySelect.value = '';
+      updateCategoryFilterBar();
+      loadBooks(true);
     });
   }
 
@@ -67,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (categorySelect) {
       categorySelect.value = currentCategory;
     }
+    updateCategoryFilterBar();
   }
 
   const loadBooks = async (reset = false) => {
@@ -150,6 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (categorySelect) {
     categorySelect.addEventListener('change', () => {
       currentCategory = categorySelect.value || null;
+      updateCategoryFilterBar();
       loadBooks(true);
     });
   }
@@ -191,7 +217,7 @@ function renderCard(book) {
 
   // 📌 테일윈드 컴파일 누락 이슈 해결을 위해 동적 삼항연산자 문자열을 명시적인 HEX 스펙 클래스로 리팩토링 완료
   const buttonClass = isAvail 
-    ? 'bg-[#4F7C6B] text-white hover:bg-[#386052]' 
+    ? 'bg-accent-bg text-white hover:bg-accent-hover' 
     : 'bg-gray-200 text-gray-400 cursor-not-allowed';
 
   return `
@@ -208,7 +234,7 @@ function renderCard(book) {
         <div class="flex-1 min-w-0">
           <!-- 카테고리 -->
           <div class="mb-1">
-            <span class="text-xs font-bold text-[#4F7C6B]">
+            <span class="text-xs font-bold text-accent-bg">
               ${UI.escapeHtml(book['카테고리']) || '일반'}
             </span>
           </div>
@@ -228,7 +254,7 @@ function renderCard(book) {
 
         <!-- 위치 -->
         <div class="flex items-center gap-1 text-sm text-gray-500 whitespace-nowrap">
-          <span class="material-symbols-outlined text-[18px] text-[#4F7C6B]">
+          <span class="material-symbols-outlined text-[18px] text-accent-bg">
             location_on
           </span>
           ${UI.formatLocation(book['위치'])}
@@ -257,7 +283,7 @@ window.rentBook = (isbn, title) => {
   const desc = `
     <b class="text-primary">${UI.escapeHtml(title)}</b><br><br>
     반납예정일:
-    <span class="text-[#4F7C6B] font-bold">
+    <span class="text-accent-bg font-bold">
       ${Utils.formatDate(dueDate)}
     </span>
   `;
