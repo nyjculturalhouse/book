@@ -126,6 +126,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observer.observe(document.getElementById('loadingTrigger'));
 
+  if (categorySelect) {
+
+  const homeData = await fetchAPI('getHome', {});
+
+  categorySelect.innerHTML = `
+    <option value="">전체 카테고리</option>
+    ${homeData.categories.map(cat => `
+      <option value="${cat}">${cat}</option>
+    `).join('')}
+  `;
+
+  if (currentCategory) {
+    categorySelect.value = currentCategory;
+  }
+}
+   
   loadBooks(true);
 });
 
