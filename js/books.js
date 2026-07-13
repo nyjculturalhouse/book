@@ -149,52 +149,62 @@ function renderCard(book) {
 
   const safeTitleForJs = UI.escapeJs(book['도서명']);
   const safeIsbnForJs = UI.escapeJs(book['ISBN']);
-  const safeTitleForHtml = UI.escapeHtml(book['도서명']);
 
   return `
-    <div class="book-card bg-container rounded-xl overflow-hidden shadow-soft flex flex-col">
-      <div class="relative w-full aspect-[2/3] bg-surface">
-        <img src="${book['표지URL']}" loading="lazy" class="w-full h-full object-cover">
-        ${!isAvail ? `
-          <div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold backdrop-blur-sm">
-            대여중
-          </div>
-        ` : ''}
-      </div>
+    <div class="bg-container rounded-xl shadow-soft hover:shadow-lg transition-all">
+      <div class="flex items-center gap-5 p-4">
 
-      <div class="p-4 flex flex-col flex-1 gap-1">
+        <img
+          src="${book['표지URL']}"
+          class="w-20 h-28 rounded-lg object-cover shrink-0">
 
-        <span class="text-xs text-accent-bg font-bold">
-          ${UI.escapeHtml(book['카테고리']) || '일반'}
-        </span>
+        <div class="flex-1 min-w-0">
 
-        <h3 class="text-md font-bold line-clamp-1">
-          ${safeTitleForHtml}
-        </h3>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-bold text-accent-bg">
+              ${UI.escapeHtml(book['카테고리']) || '일반'}
+            </span>
 
-        <p class="text-xs text-gray-500 line-clamp-1">
-          ${UI.escapeHtml(book['저자'])} | ${UI.escapeHtml(book['출판사'])}
-        </p>
-
-        <div class="mt-auto pt-4 flex flex-col gap-2">
-
-          <span class="text-xs bg-surface py-1 px-2 rounded text-gray-600 flex items-center gap-1 w-fit">
-            <span class="material-symbols-outlined text-[14px]">location_on</span>
-            ${UI.formatLocation(book['위치'])}
-          </span>
-
-          <button
-            onclick="rentBook('${safeIsbnForJs}', '${safeTitleForJs}')"
-            class="w-full py-2.5 rounded-lg font-bold text-sm transition-colors ${
+            ${
               isAvail
-                ? 'bg-primary text-white hover:bg-primary-hover'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }"
-            ${!isAvail ? 'disabled' : ''}>
-            ${isAvail ? '대여하기' : '대여불가'}
-          </button>
+                ? '<span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">대여가능</span>'
+                : '<span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">대여중</span>'
+            }
+          </div>
+
+          <h3 class="font-bold text-lg line-clamp-1">
+            ${UI.escapeHtml(book['도서명'])}
+          </h3>
+
+          <p class="text-sm text-gray-500 mt-1">
+            ${UI.escapeHtml(book['저자'])}
+            ·
+            ${UI.escapeHtml(book['출판사'])}
+          </p>
+
+          <div class="mt-3 flex items-center gap-2 text-sm text-gray-500">
+
+            <span class="material-symbols-outlined text-[18px]">
+              location_on
+            </span>
+
+            ${UI.formatLocation(book['위치'])}
+
+          </div>
 
         </div>
+
+        <button
+          onclick="rentBook('${safeIsbnForJs}','${safeTitleForJs}')"
+          class="px-6 py-3 rounded-xl font-semibold transition-all ${
+            isAvail
+              ? 'bg-primary text-white hover:bg-primary-hover'
+              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+          }"
+          ${!isAvail ? 'disabled' : ''}>
+          ${isAvail ? '대여하기' : '대여불가'}
+        </button>
+
       </div>
     </div>
   `;
