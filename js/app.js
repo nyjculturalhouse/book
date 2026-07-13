@@ -103,22 +103,61 @@ async function loadHomeData() {
 
 function renderBookCard(book) {
   const isAvail = book['상태'] === '대여가능';
+
   return `
-    <div class="book-card bg-container rounded-xl overflow-hidden shadow-soft flex flex-col">
-      <div class="relative w-full aspect-[2/3] bg-surface">
-        <img src="${book['표지URL']}" loading="lazy" class="w-full h-full object-cover">
-        ${!isAvail ? `<div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold backdrop-blur-sm">대여중</div>` : ''}
+    <a href="books.html?q=${encodeURIComponent(book['도서명'])}"
+       class="flex items-center gap-4 bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-shadow slide-up">
+
+      <div class="relative shrink-0">
+        <img
+          src="${book['표지URL']}"
+          loading="lazy"
+          class="w-14 h-20 object-cover rounded bg-surface">
+
+        ${
+          !isAvail
+            ? `<div class="absolute inset-0 bg-black/50 rounded flex items-center justify-center text-[11px] font-bold text-white">
+                대여중
+              </div>`
+            : ''
+        }
       </div>
-      <div class="p-4 flex flex-col flex-1 gap-1">
-        <span class="text-xs text-accent-bg font-bold">${book['카테고리'] || '일반'}</span>
-        <h3 class="text-md font-bold line-clamp-1">${book['도서명']}</h3>
-        <p class="text-xs text-gray-500 line-clamp-1">${book['저자']} | ${book['출판사']}</p>
-        <div class="mt-auto pt-4">
-          <a href="books.html?q=${encodeURIComponent(book['도서명'])}" class="block w-full text-center py-2.5 rounded-lg font-bold text-sm bg-surface hover:bg-gray-200 transition-colors">
-            자세히 보기
-          </a>
-        </div>
+
+      <div class="flex-1 min-w-0">
+
+        <span class="text-xs font-bold text-accent-bg">
+          ${book['카테고리'] || '일반'}
+        </span>
+
+        <h3 class="mt-1 text-base font-bold tracking-[-0.03em] leading-tight truncate">
+          ${book['도서명']}
+        </h3>
+
+        <p class="mt-1 text-sm text-gray-500 tracking-[-0.01em] leading-6 truncate">
+          ${book['저자']} · ${book['출판사']}
+        </p>
+
       </div>
-    </div>
+
+      <div class="shrink-0">
+        <span class="
+          inline-flex
+          items-center
+          justify-center
+          px-4
+          py-2
+          rounded-lg
+          text-sm
+          font-semibold
+          transition-colors
+          ${isAvail
+            ? 'bg-primary text-white hover:bg-primary-hover'
+            : 'bg-gray-200 text-gray-400'}
+        ">
+          ${isAvail ? '대여 바로가기' : '대여불가'}
+        </span>
+      </div>
+
+    </a>
   `;
 }
