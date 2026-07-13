@@ -188,27 +188,29 @@ function renderCard(book) {
   const safeIsbnForJs = UI.escapeJs(book['ISBN']);
 
   return `
-    <div class="bg-container rounded-xl shadow-soft hover:shadow-lg transition-all">
+    <div class="bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-all">
 
-      <div class="flex items-center gap-5 p-5">
+      <div class="flex items-center gap-4">
 
 
         <!-- 책 표지 -->
         <img
           src="${book['표지URL']}"
-          class="w-24 h-32 rounded-xl object-cover shrink-0">
+          loading="lazy"
+          class="w-12 h-16 rounded-lg object-cover bg-surface shrink-0">
 
 
-        <!-- 제목 / 저자 -->
+
+        <!-- 제목 / 저자 / 출판사 -->
         <div class="flex-1 min-w-0">
 
 
-          <h3 class="font-bold text-lg line-clamp-1 tracking-tight">
+          <h3 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
             ${UI.escapeHtml(book['도서명'])}
           </h3>
 
 
-          <p class="text-sm text-gray-500 mt-2">
+          <p class="mt-1 text-sm text-gray-500 tracking-[-0.01em] leading-6 truncate">
             ${UI.escapeHtml(book['저자'])}
             ·
             ${UI.escapeHtml(book['출판사'])}
@@ -224,7 +226,7 @@ function renderCard(book) {
 
 
           <!-- 위치 -->
-          <div class="flex items-center gap-1 text-sm text-gray-500">
+          <div class="flex items-center gap-1 text-sm text-gray-500 whitespace-nowrap">
 
             <span class="material-symbols-outlined text-[18px] text-[#E04825]">
               location_on
@@ -237,7 +239,7 @@ function renderCard(book) {
 
 
           <!-- 카테고리 -->
-          <span class="text-xs font-semibold text-[#E04825] whitespace-nowrap">
+          <span class="text-sm font-semibold text-[#E04825] whitespace-nowrap">
 
             ${UI.escapeHtml(book['카테고리']) || '일반'}
 
@@ -250,12 +252,20 @@ function renderCard(book) {
           <button
             onclick="rentBook('${safeIsbnForJs}','${safeTitleForJs}')"
 
-            class="px-6 py-3 rounded-xl font-semibold transition-all whitespace-nowrap
-            ${
-              isAvail
-              ? 'bg-[#E04825] text-white hover:bg-[#C63D20]'
-              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }"
+            class="
+              px-4
+              py-2
+              rounded-lg
+              text-sm
+              font-semibold
+              whitespace-nowrap
+              transition-all
+              ${
+                isAvail
+                ? 'bg-[#E04825] text-white hover:bg-[#C63D20]'
+                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }
+            "
 
             ${!isAvail ? 'disabled' : ''}>
 
