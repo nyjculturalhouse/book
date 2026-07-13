@@ -2,6 +2,7 @@
    대여현황 페이지 전용 스크립트
    - 현재 대여 / 대여 이력 탭 전환
    - 반납 처리
+   - 반납일 기준 동적 D-Day 배지 표출 
 ========================================================= */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -60,49 +61,84 @@ document.addEventListener('DOMContentLoaded', async () => {
 function renderCurrentItem(item) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  
   const dueDate = new Date(item['반납예정일']);
   dueDate.setHours(0, 0, 0, 0);
-  const diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+  
+  const diffTime = dueDate.getTime() - today.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+  // 📌 D-Day 구간별 명시적 스타일 매핑 (테일윈드 JIT 컴파일 대응 및 UI 고급화)
   let statusBadge = '';
   if (diffDays < 0) {
-    statusBadge = `<span class="px-2 py-1 bg-red-100 text-red-600 rounded text-[14px] font-suit font-semibold tracking-[-0.01em]">연체 ${Math.abs(diffDays)}일</span>`;
+    // 1. 반납기한이 지난 경우 (연체)
+    statusBadge = `
+      <span class="px-2 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em]">
+        연체 ${Math.abs(diffDays)}일째
+      </span>
+    `;
   } else if (diffDays === 0) {
-    statusBadge = `<span class="px-2 py-1 bg-accent-bg/10 text-accent-bg rounded text-[14px] font-suit font-semibold tracking-[-0.01em]">오늘 반납</span>`;
+    // 2. 반납 당일인 경우 (맥박 애니메이션 효과 추가)
+    statusBadge = `
+      <span class="px-2 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em] animate-pulse">
+        오늘 반납 마감
+      </span>
+    `;
+  } else if (diffDays <= 3) {
+    // 3. 반납 마감 임박 (3일 이하)
+    statusBadge = `
+      <span class="px-2 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
+        D-${diffDays} (연체주의)
+      </span>
+    `;
   } else {
-    statusBadge = `<span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[14px] font-suit font-semibold tracking-[-0.01em]">D-${diffDays}</span>`;
+    // 4. 반납 기한이 넉넉한 경우 (소소책방 시그니처 세이지 그린 테마 매핑)
+    statusBadge = `
+      <span class="px-2 py-1 bg-[#4F7C6B]/10 text-[#4F7C6B] rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
+        D-${diffDays}
+      </span>
+    `;
   }
 
   const safeIsbnForJs = UI.escapeJs(item['ISBN']);
   const safeTitleForJs = UI.escapeJs(item['제목']);
 
-  // 📌 반납하기 버튼의 class에 'btn-bounce'를 추가하여 쫀득한 튕김 인터랙션 매핑
   return `
     <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
-      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm">
+      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
       <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1">
-          <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] truncate">${UI.escapeHtml(item['제목'])}</h3>
+        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+          <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] truncate max-w-[180px] sm:max-w-none">
+            ${UI.escapeHtml(item['제목'])}
+          </h3>
           ${statusBadge}
         </div>
-        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">대여일: ${Utils.formatDate(item['대여일'])}</p>
-        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">반납예정일: ${Utils.formatDate(item['반납예정일'])}</p>
+        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
+          대여일: ${Utils.formatDate(item['대여일'])}
+        </p>
+        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
+          반납예정일: <span class="font-medium">${Utils.formatDate(item['반납예정일'])}</span>
+        </p>
       </div>
-      <button onclick="returnBook('${safeIsbnForJs}', '${safeTitleForJs}')" class="btn-bounce px-4 py-2 bg-primary text-white rounded-lg font-suit text-[15px] font-normal tracking-[-0.015em] hover:bg-primary-hover transition-colors shrink-0">
-        반납하기
+      <button 
+        onclick="returnBook('${safeIsbnForJs}', '${safeTitleForJs}')" 
+        class="btn-bounce px-4 py-2 bg-[#4F7C6B] text-white rounded-lg font-suit text-[15px] font-normal tracking-[-0.015em] hover:bg-[#386052] transition-colors shrink-0">
+          반납하기
       </button>
     </div>
   `;
 }
 
-// 대여 이력 렌더링 (단순 상태 표시 영역이므로 별도의 버튼 인터랙션 클래스는 불필요하여 디자인 유지)
+// 대여 이력 렌더링
 function renderHistoryItem(item) {
   const isOverdue = item['연체일수'] > 0;
   return `
     <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
-      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm">
+      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
       <div class="flex-1 min-w-0">
-        <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800 mb-1 truncate">${UI.escapeHtml(item['제목'])}</h3>
+        <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800 mb-1 truncate">
+          ${UI.escapeHtml(item['제목'])}
+        </h3>
         <div class="flex flex-col gap-0.5 font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
           <span>대여: ${Utils.formatDate(item['대여일'])}</span>
           <span>반납: ${Utils.formatDate(item['반납일'])}</span>
@@ -119,7 +155,9 @@ function renderHistoryItem(item) {
 
 window.returnBook = (isbn, title) => {
   const user = JSON.parse(localStorage.getItem('sosoUser'));
-  UI.showModal('반납하시겠습니까?', `<b class="text-primary">${UI.escapeHtml(title)}</b>`, '반납', async () => {
+  
+  // 반납 모달 안내창에도 브랜드 세이지 그린 포인트 컬러 적용 적용
+  UI.showModal('반납하시겠습니까?', `<b class="text-[#4F7C6B]">${UI.escapeHtml(title)}</b>`, '반납', async () => {
     try {
       await fetchAPI('returnBook', { userId: user.id, isbn }, 'POST');
       invalidateFetchCache();
