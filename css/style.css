@@ -176,3 +176,30 @@ html {
   --color-container: #FFFFFF;    /* White (카드 배경) */
   --color-border: #E5E5E0;       /* Soft Gray (구분선) */
 }
+
+/* 로그인/회원가입/검색창 Input 요소를 위해 */
+.input-field {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.input-field:focus {
+  border-color: #4F7C6B; /* Sage Green */
+  box-shadow: 0 0 0 4px rgba(79, 124, 107, 0.12); /* 은은한 잔상 */
+}
+
+/* API 호출 시작 시 body에 붙여서 사용할 수 있는 게이지 바 */
+.top-loading-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4F7C6B, #386052);
+  z-index: 9999;
+  animation: loadProgress 1.5s infinite linear;
+  transform-origin: left;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; opacity: 1; }
+  50% { width: 70%; opacity: 1; }
+  100% { width: 100%; opacity: 0; }
+}
