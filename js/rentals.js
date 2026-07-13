@@ -1,171 +1,154 @@
 /* =========================================================
-   대여현황 페이지 전용 스크립트
-   - 현재 대여 / 대여 이력 탭 전환
-   - 반납 처리
-   - 반납일 기준 동적 D-Day 배지 표출 
+   소소책방 UI 유틸 모듈
+   토스트 / 모달 / 스켈레톤 / 위치 포맷 등 공통 UI 컴포넌트
 ========================================================= */
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const user = JSON.parse(localStorage.getItem('sosoUser'));
-  if (!user) return;
+const UI = {
+  /**
+   * 토스트 메시지 표시
+   * @param {string} message
+   * @param {'success'|'error'} type
+   */
+  showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) return;
 
-  const currentContainer = document.getElementById('currentRentals');
-  const historyContainer = document.getElementById('historyRentals');
+    const toast = document.createElement('div');
+    
+    // 📌 새로운 브랜드 컬러(Primary Ink Black) 가이드라인 적용을 위해 bg-primary 사용
+    const bg = 'bg-primary'; 
+    const iconName = type === 'error' ? 'error' : 'check_circle';
+    
+    // 📌 에러는 기존 레드를 유지, 성공(success) 시 주황색 대신 새로운 브랜드 컬러인 Sage Green(#4F7C6B) 매핑
+    const iconColor = type === 'error' ? 'text-red-400' : 'text-accent-bg';
 
-  const tabCurrent = document.getElementById('tab-current');
-  const tabHistory = document.getElementById('tab-history');
-
-  // 탭 전환
-  const switchTab = (active) => {
-    if (active === 'current') {
-      currentContainer.classList.remove('hidden');
-      historyContainer.classList.add('hidden');
-      tabCurrent.className = 'pb-3 px-2 font-suit text-[16px] font-semibold text-accent-bg border-b-2 border-accent-bg transition-colors tracking-[-0.02em]';
-      tabHistory.className = 'pb-3 px-2 font-suit text-[16px] font-medium text-gray-500 hover:text-primary transition-colors tracking-[-0.02em]';
-    } else {
-      currentContainer.classList.add('hidden');
-      historyContainer.classList.remove('hidden');
-      tabHistory.className = 'pb-3 px-2 font-suit text-[16px] font-semibold text-accent-bg border-b-2 border-accent-bg transition-colors tracking-[-0.02em]';
-      tabCurrent.className = 'pb-3 px-2 font-suit text-[16px] font-medium text-gray-500 hover:text-primary transition-colors tracking-[-0.02em]';
-    }
-  };
-
-  tabCurrent.addEventListener('click', () => switchTab('current'));
-  tabHistory.addEventListener('click', () => switchTab('history'));
-
-  // 데이터 로드
-  currentContainer.innerHTML = UI.renderBookSkeleton(2);
-
-  try {
-    const data = await fetchAPI('getRentals', { userId: user.id });
-    if (!data) return;
-
-    // 현재 대여
-    if (data.current.length === 0) {
-      currentContainer.innerHTML = '<div class="bg-container rounded-xl p-8 text-center text-gray-500 shadow-soft font-suit text-[15px] font-normal tracking-[-0.015em]">현재 대여 중인 도서가 없습니다.</div>';
-    } else {
-      currentContainer.innerHTML = data.current.map(renderCurrentItem).join('');
-    }
-
-    // 대여 이력
-    if (data.history.length === 0) {
-      historyContainer.innerHTML = '<div class="bg-container rounded-xl p-8 text-center text-gray-500 shadow-soft font-suit text-[15px] font-normal tracking-[-0.015em]">대여 이력이 없습니다.</div>';
-    } else {
-      historyContainer.innerHTML = [...data.history].reverse().map(renderHistoryItem).join('');
-    }
-  } catch (err) {
-    currentContainer.innerHTML = `<div class="text-center text-red-500 py-8 font-suit text-[15px] font-normal tracking-[-0.015em]">${err.message || '데이터를 불러오는데 실패했습니다.'}</div>`;
-  }
-});
-
-function renderCurrentItem(item) {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  
-  const dueDate = new Date(item['반납예정일']);
-  dueDate.setHours(0, 0, 0, 0);
-  
-  const diffTime = dueDate.getTime() - today.getTime();
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-  // 📌 D-Day 구간별 명시적 스타일 매핑 (테일윈드 JIT 컴파일 대응 및 UI 고급화)
-  let statusBadge = '';
-  if (diffDays < 0) {
-    // 1. 반납기한이 지난 경우 (연체)
-    statusBadge = `
-      <span class="px-2 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em]">
-        연체 ${Math.abs(diffDays)}일째
-      </span>
+    // 📌 SUIT 폰트 세부 규칙 (14px, Medium, 자간 -0.015em) 완벽 반영
+    toast.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-soft flex items-center gap-2 text-[14px] font-medium tracking-[-0.015em] font-suit`;
+    toast.innerHTML = `
+      <span class="material-symbols-outlined text-[18px] ${iconColor}">${iconName}</span>
+      <span>${message}</span>
     `;
-  } else if (diffDays === 0) {
-    // 2. 반납 당일인 경우 (맥박 애니메이션 효과 추가)
-    statusBadge = `
-      <span class="px-2 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em] animate-pulse">
-        오늘 반납 마감
-      </span>
-    `;
-  } else if (diffDays <= 3) {
-    // 3. 반납 마감 임박 (3일 이하)
-    statusBadge = `
-      <span class="px-2 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
-        D-${diffDays} (연체주의)
-      </span>
-    `;
-  } else {
-    // 4. 반납 기한이 넉넉한 경우 (소소책방 시그니처 세이지 그린 테마 매핑)
-    statusBadge = `
-      <span class="px-2 py-1 bg-[#4F7C6B]/10 text-[#4F7C6B] rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
-        D-${diffDays}
-      </span>
-    `;
-  }
 
-  const safeIsbnForJs = UI.escapeJs(item['ISBN']);
-  const safeTitleForJs = UI.escapeJs(item['제목']);
+    container.appendChild(toast);
 
-  return `
-    <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
-      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
-      <div class="flex-1 min-w-0">
-        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-          <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] truncate max-w-[180px] sm:max-w-none">
-            ${UI.escapeHtml(item['제목'])}
-          </h3>
-          ${statusBadge}
-        </div>
-        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
-          대여일: ${Utils.formatDate(item['대여일'])}
-        </p>
-        <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
-          반납예정일: <span class="font-medium">${Utils.formatDate(item['반납예정일'])}</span>
-        </p>
-      </div>
-      <button 
-        onclick="returnBook('${safeIsbnForJs}', '${safeTitleForJs}')" 
-        class="btn-bounce px-4 py-2 bg-[#4F7C6B] text-white rounded-lg font-suit text-[15px] font-normal tracking-[-0.015em] hover:bg-[#386052] transition-colors shrink-0">
-          반납하기
-      </button>
-    </div>
-  `;
-}
+    setTimeout(() => {
+      toast.classList.add('leaving');
+      setTimeout(() => toast.remove(), 220);
+    }, 2400);
+  },
 
-// 대여 이력 렌더링
-function renderHistoryItem(item) {
-  const isOverdue = item['연체일수'] > 0;
-  return `
-    <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
-      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
-      <div class="flex-1 min-w-0">
-        <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800 mb-1 truncate">
-          ${UI.escapeHtml(item['제목'])}
-        </h3>
-        <div class="flex flex-col gap-0.5 font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
-          <span>대여: ${Utils.formatDate(item['대여일'])}</span>
-          <span>반납: ${Utils.formatDate(item['반납일'])}</span>
+  /**
+   * 확인 모달 표시
+   * @param {string} title
+   * @param {string} descriptionHtml
+   * @param {string} confirmText
+   * @param {Function} onConfirm - async 함수 가능
+   */
+  showModal(title, descriptionHtml, confirmText, onConfirm) {
+    const existing = document.getElementById('ui-modal-root');
+    if (existing) existing.remove();
+
+    const root = document.createElement('div');
+    root.id = 'ui-modal-root';
+    root.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/40 modal-backdrop px-4 font-suit';
+    
+    // 📌 모달 제목(18px Semibold), 본문(14px Light) 스타일 조정
+    // 📌 모달 버튼들에 CSS로 추가하신 1번 효과인 쫀득한 팅김 효과 클래스('btn-bounce')를 정밀하게 매핑
+    // 📌 확인 버튼에 새로운 세이지 그린 컬러 시스템 적용 (bg-accent / hover 시 Deep Sage로 전환)
+    root.innerHTML = `
+      <div class="bg-container w-full max-w-[340px] rounded-xl shadow-soft p-6 modal-box text-primary">
+        <h3 class="text-[18px] font-semibold mb-2 tracking-[-0.025em]">${title}</h3>
+        <div class="text-[14px] font-light text-gray-600 leading-relaxed mb-6 tracking-[-0.015em]">${descriptionHtml}</div>
+        <div class="flex gap-2 text-[15px] font-medium tracking-[-0.015em]">
+          <button id="ui-modal-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-surface font-medium hover:bg-gray-200 text-primary transition-colors">취소</button>
+          <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent text-accent-text font-medium hover:bg-accent-hover transition-colors">${confirmText}</button>
         </div>
       </div>
-      <div class="shrink-0">
-        ${isOverdue
-          ? `<span class="inline-block px-4 py-2 bg-red-50 text-red-500 border border-red-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">연체 ${item['연체일수']}일</span>`
-          : `<span class="inline-block px-4 py-2 bg-green-50 text-green-600 border border-green-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">정상반납</span>`}
-      </div>
-    </div>
-  `;
-}
+    `;
 
-window.returnBook = (isbn, title) => {
-  const user = JSON.parse(localStorage.getItem('sosoUser'));
-  
-  // 반납 모달 안내창에도 브랜드 세이지 그린 포인트 컬러 적용 적용
-  UI.showModal('반납하시겠습니까?', `<b class="text-[#4F7C6B]">${UI.escapeHtml(title)}</b>`, '반납', async () => {
-    try {
-      await fetchAPI('returnBook', { userId: user.id, isbn }, 'POST');
-      invalidateFetchCache();
-      UI.showToast('반납되었습니다.');
-      setTimeout(() => window.location.reload(), 1000);
-    } catch (err) {
-      UI.showToast(err.message, 'error');
-      throw err;
+    document.body.appendChild(root);
+
+    const close = () => {
+      root.remove();
+    };
+
+    root.addEventListener('click', (e) => {
+      if (e.target === root) close();
+    });
+
+    document.getElementById('ui-modal-cancel').addEventListener('click', close);
+    document.getElementById('ui-modal-confirm').addEventListener('click', async () => {
+      const btn = document.getElementById('ui-modal-confirm');
+      btn.disabled = true;
+      const original = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>';
+      try {
+        await onConfirm();
+        close();
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    });
+  },
+
+  /**
+   * 도서 카드 스켈레톤 HTML 반환
+   * @param {number} count
+   */
+  renderBookSkeleton(count = 8) {
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      html += `
+        <div class="bg-container rounded-xl overflow-hidden shadow-soft flex flex-col">
+          <div class="w-full aspect-[2/3] skeleton"></div>
+          <div class="p-4 flex flex-col gap-2">
+            <div class="h-3 w-1/3 skeleton"></div>
+            <div class="h-4 w-4/5 skeleton"></div>
+            <div class="h-3 w-3/5 skeleton"></div>
+            <div class="h-9 w-full skeleton mt-3"></div>
+          </div>
+        </div>
+      `;
     }
-  });
+    return html;
+  },
+
+  /**
+   * 위치 코드를 사람이 읽기 쉬운 문자열로 변환
+   * 예: "A-03-02" -> "A서가 · 3칸 · 2번째"
+   */
+  formatLocation(locationCode) {
+    if (!locationCode) return '위치 미지정';
+    const parts = String(locationCode).split('-');
+    if (parts.length < 3) return locationCode;
+    const [zone, shelf, order] = parts;
+    return `${zone}서가 · ${parseInt(shelf, 10)}칸 · ${parseInt(order, 10)}번째`;
+  },
+
+  /**
+   * HTML 특수문자 이스케이프 (XSS/구문 오류 방지용)
+   */
+  escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  },
+
+  /**
+   * 문자열을 JS 문자열 리터럴(작은따옴표) 안에 안전하게 삽입하기 위한 이스케이프
+   * onclick="fn('...')" 형태에 사용 — HTML escape와는 별개로 반드시 필요
+   */
+  escapeJs(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/\\/g, '\\\\')
+      .replace(/'/g, "\\'")
+      .replace(/"/g, '&quot;')
+      .replace(/\n/g, '\\n');
+  }
 };
