@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const tabCurrent = document.getElementById('tab-current');
   const tabHistory = document.getElementById('tab-history');
 
-  // 탭 전환 (기존 HTML의 버블/가이드라인 디자인이 유지되도록 클래스명 수정)
+  // 탭 전환
   const switchTab = (active) => {
     if (active === 'current') {
       currentContainer.classList.remove('hidden');
@@ -73,7 +73,6 @@ function renderCurrentItem(item) {
     statusBadge = `<span class="px-2 py-1 bg-gray-100 text-gray-600 rounded text-[14px] font-suit font-semibold tracking-[-0.01em]">D-${diffDays}</span>`;
   }
 
-  // ⚠️ 도서명에 작은따옴표가 있어도 깨지지 않도록 UI.escapeJs 사용
   const safeIsbnForJs = UI.escapeJs(item['ISBN']);
   const safeTitleForJs = UI.escapeJs(item['제목']);
 
@@ -95,19 +94,23 @@ function renderCurrentItem(item) {
   `;
 }
 
+// 📌 표지 이미지 추가 및 우측 상태 배너를 반납하기 버튼 크기와 똑같이 정비
 function renderHistoryItem(item) {
   const isOverdue = item['연체일수'] > 0;
   return `
-    <div class="bg-container rounded-xl p-4 shadow-soft flex flex-col gap-2 slide-up">
-      <div class="flex justify-between items-start">
-        <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800">${UI.escapeHtml(item['제목'])}</h3>
-        ${isOverdue
-          ? `<span class="font-suit text-[14px] font-semibold tracking-[-0.01em] text-red-500 bg-red-50 px-2 py-1 rounded">연체 (${item['연체일수']}일)</span>`
-          : `<span class="font-suit text-[14px] font-semibold tracking-[-0.01em] text-green-600 bg-green-50 px-2 py-1 rounded">정상반납</span>`}
+    <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
+      <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm">
+      <div class="flex-1 min-w-0">
+        <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800 mb-1 truncate">${UI.escapeHtml(item['제목'])}</h3>
+        <div class="flex flex-col gap-0.5 font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
+          <span>대여: ${Utils.formatDate(item['대여일'])}</span>
+          <span>반납: ${Utils.formatDate(item['반납일'])}</span>
+        </div>
       </div>
-      <div class="flex flex-wrap gap-x-4 font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
-        <span>대여: ${Utils.formatDate(item['대여일'])}</span>
-        <span>반납: ${Utils.formatDate(item['반납일'])}</span>
+      <div class="shrink-0">
+        ${isOverdue
+          ? `<span class="inline-block px-4 py-2 bg-red-50 text-red-500 border border-red-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">연체 ${item['연체일수']}일</span>`
+          : `<span class="inline-block px-4 py-2 bg-green-50 text-green-600 border border-green-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">정상반납</span>`}
       </div>
     </div>
   `;
