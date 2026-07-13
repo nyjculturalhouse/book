@@ -272,7 +272,7 @@ function renderCard(book) {
 
       ${!isAvail ? 'disabled' : ''}>
 
-      ${isAvail ? '대여하기' : '대여중'}
+            ${isAvail ? '대여하기' : '대여중'}
 
     </button>
 
@@ -280,6 +280,8 @@ function renderCard(book) {
   </div>
 
 </div>
+`;
+}
 
 window.rentBook = (isbn, title) => {
   const user = JSON.parse(localStorage.getItem('sosoUser'));
