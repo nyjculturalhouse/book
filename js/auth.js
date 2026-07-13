@@ -11,14 +11,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabSignup = document.getElementById('tab-signup');
   const signupPhoneInput = document.getElementById('signupPhone');
 
+  // 각 폼 안의 모든 input 요소를 찾아 CSS 3번 효과인 'input-field' 클래스 일괄 주입
+  const inputs = document.querySelectorAll('#loginForm input, #signupForm input');
+  inputs.forEach(input => input.classList.add('input-field'));
+
+  // 로그인/회원가입 제출 버튼 및 상단 탭 버튼에 1번 효과인 'btn-bounce' 클래스 일괄 주입
+  const buttons = document.querySelectorAll('#loginBtn, #signupBtn, #tab-login, #tab-signup');
+  buttons.forEach(btn => btn.classList.add('btn-bounce'));
+
   // ---------- 로그인 / 회원가입 탭 전환 ----------
+  // 📌 탭 활성화 시 텍스트 컬러를 주황색 계열 대신 새로운 브랜드 정체성인 text-accent-bg(세이지 그린)로 맵핑
   const showLogin = () => {
     loginForm.classList.remove('hidden');
     loginForm.classList.add('flex');
     signupForm.classList.add('hidden');
     signupForm.classList.remove('flex');
-    tabLogin.className = 'flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft transition-colors';
-    tabSignup.className = 'flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors';
+    tabLogin.className = 'flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft text-accent-bg transition-colors btn-bounce';
+    tabSignup.className = 'flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors btn-bounce';
   };
 
   const showSignup = () => {
@@ -26,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     signupForm.classList.add('flex');
     loginForm.classList.add('hidden');
     loginForm.classList.remove('flex');
-    tabSignup.className = 'flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft transition-colors';
-    tabLogin.className = 'flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors';
+    tabSignup.className = 'flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft text-accent-bg transition-colors btn-bounce';
+    tabLogin.className = 'flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors btn-bounce';
   };
 
   tabLogin.addEventListener('click', showLogin);
