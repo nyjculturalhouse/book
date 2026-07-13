@@ -7,25 +7,25 @@
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        suit: ['Suit', 'sans-serif'],
-        haeong: ['KookminUniversityHaeongSans', 'sans-serif']
-      },
-      colors: {
-        primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
-        accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
-        surface: "#F7F6F2",
-        container: "#FFFFFF",
-        borderColor: "#E5E5E0"
-      },
-      boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-      borderRadius: { xl: "18px" }
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            suit: ['Suit', 'sans-serif'],
+            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+          },
+          colors: {
+            primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
+            accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
+            surface: "#F7F6F2",
+            container: "#FFFFFF",
+            borderColor: "#E5E5E0"
+          },
+          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
+          borderRadius: { xl: "18px" }
+        }
+      }
     }
-  }
-}
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -33,7 +33,7 @@ tailwind.config = {
 
   <style>
     /* ===========================
-       SUIT Font Face
+        SUIT Font Face
     =========================== */
     @font-face {
       font-family: 'Suit';
@@ -61,7 +61,7 @@ tailwind.config = {
     }
 
     /* ===========================
-       KookminUniversityHaeongSans Font Face
+        KookminUniversityHaeongSans Font Face
     =========================== */
     @font-face {
       font-family: 'KookminUniversityHaeongSans';
@@ -86,10 +86,10 @@ tailwind.config = {
     }
   </style>
 
-  <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
+  <script src="./js/app.js" defer></script>
   <script src="./js/profile.js" defer></script>
 </head>
 
@@ -98,18 +98,22 @@ tailwind.config = {
   <!-- Header -->
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-haeong text-[26px] font-normal tracking-[-0.04em]">소소책방</a>
+      <a href="index.html" class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-[#4F7C6B]">소소책방</a>
 
       <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
         <a href="index.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">홈</a>
         <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
         <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
-        <a href="profile.html" class="px-4 py-2 rounded-full bg-[#E04825] text-white font-medium shadow-sm">내정보</a>
+        
+        <!-- 📌 활성화 메뉴 테마 컬러 교체 (bg-[#E04825] -> bg-[#4F7C6B]) -->
+        <a href="profile.html" class="px-4 py-2 rounded-full bg-[#4F7C6B] text-white font-medium shadow-sm">내정보</a>
+        
         <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">로그아웃</button>
       </nav>
     </div>
   </header>
 
+  <!-- 메인 본문 -->
   <main class="max-w-[1400px] mx-auto px-4 py-8">
 
     <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em] mb-6">내 정보</h2>
@@ -122,12 +126,12 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- 회원탈퇴 버튼 -->
+    <!-- 회원탈퇴 영역 -->
     <div class="flex justify-end">
+      <!-- 📌 탈퇴 버튼 색상을 서비스 무드에 어울리는 소프트 레드 톤(bg-[#C94A4A] / hover:bg-[#B23B3B])으로 재정비 -->
       <button
         id="withdrawBtn"
-        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-suit text-[15px] font-semibold tracking-[-0.015em] text-white transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
-        style="background:#E04825;"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-suit text-[15px] font-semibold tracking-[-0.015em] text-white bg-[#C94A4A] hover:bg-[#B23B3B] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
       >
         <span
           class="material-symbols-outlined"
@@ -141,10 +145,16 @@ tailwind.config = {
 
   </main>
 
-  <div
-    id="toastContainer"
-    class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
-  </div>
+  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+
+  <!-- 📌 전역 카피라이트 라이선스 푸터 추가 -->
+  <footer class="mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
+    <p>
+      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
+      해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
+      CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+    </p>
+  </footer>
 
 </body>
 </html>
