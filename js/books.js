@@ -11,12 +11,49 @@ let hasMoreData = true;
 let currentCategory = null;
 
 document.addEventListener('DOMContentLoaded', async () => {
+
   if (!document.getElementById('booksList')) return;
+
 
   const searchInput = document.getElementById('searchInput');
   const availableOnly = document.getElementById('availableOnly');
+  const availableBtn = document.getElementById('availableBtn');
   const sortSelect = document.getElementById('sortSelect');
   const categorySelect = document.getElementById('categorySelect');
+
+
+  availableBtn.addEventListener("click", () => {
+
+      availableOnly.checked = !availableOnly.checked;
+
+      if (availableOnly.checked) {
+          availableBtn.classList.remove(
+              "bg-white",
+              "text-gray-700"
+          );
+
+          availableBtn.classList.add(
+              "bg-[#FF5A36]",
+              "text-white"
+          );
+
+      } else {
+          availableBtn.classList.remove(
+              "bg-[#FF5A36]",
+              "text-white"
+          );
+
+          availableBtn.classList.add(
+              "bg-white",
+              "text-gray-700"
+          );
+      }
+
+      loadBooks(true);
+
+  });
+
+});
 
   // URL 쿼리 파라미터 처리
   const urlParams = new URLSearchParams(window.location.search);
