@@ -198,98 +198,88 @@ function renderCard(book) {
   return `
     <div class="bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-all">
 
-      <div class="flex items-center gap-4">
+  <div class="flex items-center gap-4">
 
 
-        <!-- 책 표지 -->
-        <img
-          src="${book['표지URL']}"
-          loading="lazy"
-          class="w-12 h-16 rounded-lg object-cover bg-surface shrink-0">
+    <!-- 책 표지 -->
+    <img
+      src="${book['표지URL']}"
+      loading="lazy"
+      class="w-12 h-16 rounded-lg object-cover bg-surface shrink-0">
 
 
-
-        <!-- 제목 / 저자 / 출판사 -->
-        <div class="flex-1 min-w-0">
-
-
-          <h3 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
-            ${UI.escapeHtml(book['도서명'])}
-          </h3>
+    <!-- 제목 영역 -->
+    <div class="flex-1 min-w-0">
 
 
-          <p class="mt-1 text-sm text-gray-500 tracking-[-0.01em] leading-6 truncate">
-            ${UI.escapeHtml(book['저자'])}
-            ·
-            ${UI.escapeHtml(book['출판사'])}
-          </p>
-
-
-        </div>
-
-
-
-        <!-- 위치 / 카테고리 / 버튼 -->
-        <div class="flex items-center gap-4 shrink-0">
-
-
-          <!-- 위치 -->
-          <div class="flex items-center gap-1 text-sm text-gray-500 whitespace-nowrap">
-
-            <span class="material-symbols-outlined text-[18px] text-[#E04825]">
-              location_on
-            </span>
-
-            ${UI.formatLocation(book['위치'])}
-
-          </div>
-
-
-
-          <!-- 카테고리 -->
-          <span class="text-sm font-semibold text-[#E04825] whitespace-nowrap">
-
-            ${UI.escapeHtml(book['카테고리']) || '일반'}
-
-          </span>
-
-
-
-
-          <!-- 대여 버튼 -->
-          <button
-            onclick="rentBook('${safeIsbnForJs}','${safeTitleForJs}')"
-
-            class="
-              px-4
-              py-2
-              rounded-lg
-              text-sm
-              font-semibold
-              whitespace-nowrap
-              transition-all
-              ${
-                isAvail
-                ? 'bg-[#E04825] text-white hover:bg-[#C63D20]'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-              }
-            "
-
-            ${!isAvail ? 'disabled' : ''}>
-
-            ${isAvail ? '대여하기' : '대여중'}
-
-          </button>
-
-
-        </div>
-
-
+      <!-- 카테고리 -->
+      <div class="mb-1">
+        <span class="text-xs font-bold text-[#E04825]">
+          ${UI.escapeHtml(book['카테고리']) || '일반'}
+        </span>
       </div>
 
+
+      <!-- 제목 -->
+      <h3 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
+        ${UI.escapeHtml(book['도서명'])}
+      </h3>
+
+
+      <!-- 저자 출판사 -->
+      <p class="mt-1 text-sm text-gray-500 tracking-[-0.01em] truncate">
+        ${UI.escapeHtml(book['저자'])}
+        ·
+        ${UI.escapeHtml(book['출판사'])}
+      </p>
+
+
     </div>
-  `;
-}
+
+
+
+    <!-- 위치 -->
+    <div class="flex items-center gap-1 text-sm text-gray-500 whitespace-nowrap">
+
+      <span class="material-symbols-outlined text-[18px] text-[#E04825]">
+        location_on
+      </span>
+
+      ${UI.formatLocation(book['위치'])}
+
+    </div>
+
+
+
+    <!-- 대여 버튼 -->
+    <button
+      onclick="rentBook('${safeIsbnForJs}','${safeTitleForJs}')"
+
+      class="
+      px-4
+      py-2
+      rounded-lg
+      text-sm
+      font-semibold
+      whitespace-nowrap
+      transition-all
+      ${
+        isAvail
+        ? 'bg-[#E04825] text-white hover:bg-[#C63D20]'
+        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+      }
+      "
+
+      ${!isAvail ? 'disabled' : ''}>
+
+      ${isAvail ? '대여하기' : '대여중'}
+
+    </button>
+
+
+  </div>
+
+</div>
 
 window.rentBook = (isbn, title) => {
   const user = JSON.parse(localStorage.getItem('sosoUser'));
