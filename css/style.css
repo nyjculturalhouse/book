@@ -203,3 +203,11 @@ html {
   50% { width: 70%; opacity: 1; }
   100% { width: 100%; opacity: 0; }
 }
+
+/* 버튼 및 탭 메뉴 클릭 시 팅기는 듯한 물리 효과 */
+.btn-bounce {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.btn-bounce:active {
+  transform: scale(0.94);
+}
