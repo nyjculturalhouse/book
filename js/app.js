@@ -77,8 +77,13 @@ async function loadHomeData() {
           <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-accent-bg' : 'text-gray-300'}">${idx + 1}</span>
           <img src="${book['표지URL']}" loading="lazy" class="w-10 h-14 object-cover rounded bg-surface shrink-0">
           <div class="flex-1 min-w-0">
-            <h4 class="text-sm font-bold truncate">${book['도서명']}</h4>
-            <p class="text-xs text-gray-500 truncate">${book['저자']}</p>
+<h4 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
+  ${book['도서명']}
+</h4>
+
+<p class="text-sm text-gray-500 tracking-[-0.01em] leading-6 truncate">
+  ${book['저자']}
+</p>
           </div>
           <span class="text-xs text-gray-400 shrink-0">대여 ${book['대여횟수']}회</span>
         </a>
@@ -139,7 +144,7 @@ function renderBookCard(book) {
             transition-colors
             ${
               isAvail
-                ? 'bg-primary text-white hover:bg-primary-hover'
+                ? 'bg-[#E04825] text-white hover:bg-[#C93F1E]'
                 : 'bg-gray-200 text-gray-400 pointer-events-none'
             }
           ">
