@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
 
         <div class="flex flex-col gap-1 border-b border-gray-100 pb-4">
-          <span class="text-[13px] font-semibold text-gray-400 tracking-[-0.01em]">아이디 (사번)</span>
+          <span class="text-[13px] font-semibold text-gray-400 tracking-[-0.01em]">아이디</span>
           <span class="text-[17px] font-medium tracking-[-0.02em]">${UI.escapeHtml(data['아이디'])}</span>
         </div>
 
