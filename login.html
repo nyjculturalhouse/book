@@ -5,27 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>소소책방 | 로그인</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            suit: ['Suit', 'sans-serif'],
-            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
-          },
-          colors: {
-            primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
-            accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
-            surface: "#F7F6F2",
-            container: "#FFFFFF",
-            borderColor: "#E5E5E0"
-          },
-          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-          borderRadius: { xl: "18px" }
-        }
-      }
-    }
-  </script>
+  <script src="./js/tailwind-config.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
   
@@ -93,9 +73,10 @@
 <body class="bg-surface flex items-center justify-center min-h-screen font-suit text-onSurface">
 
   <main class="bg-container p-8 rounded-xl shadow-soft w-full max-w-sm slide-up">
-    <!-- 📌 브랜드 아이덴티티: 로고 텍스트 컬러를 세이지 그린 테마 및 성곡해옹 폰트로 매핑 -->
+    <!-- 📌 브랜드 아이덴티티: 소속기관 표기 + 로고 텍스트 컬러를 세이지 그린 테마 및 성곡해옹 폰트로 매핑 -->
     <div class="text-center mb-6">
-      <h1 class="font-haeong text-[32px] font-normal tracking-[-0.04em] text-[#4F7C6B] mb-1">소소책방</h1>
+      <p class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-1">남양주시 문화의집</p>
+      <h1 class="font-haeong text-[32px] font-normal tracking-[-0.04em] text-accent-bg mb-1">소소책방</h1>
       <p class="text-sm font-light text-gray-400 tracking-[-0.02em]">도서대여 시스템</p>
     </div>
 
@@ -108,13 +89,13 @@
     <!-- 로그인 폼 -->
     <form id="loginForm" class="flex flex-col gap-4">
       <div>
-        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
+        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
+        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
-      <button type="submit" id="loginBtn" class="w-full h-12 bg-[#4F7C6B] text-white rounded-lg font-bold hover:bg-[#386052] transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
+      <button type="submit" id="loginBtn" class="w-full h-12 bg-accent-bg text-white rounded-lg font-bold hover:bg-accent-hover transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
         로그인
       </button>
     </form>
@@ -122,17 +103,17 @@
     <!-- 회원가입 폼 -->
     <form id="signupForm" class="hidden flex-col gap-4">
       <div>
-        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
+        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
+        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
+        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <p class="text-xs text-gray-400 -mt-1 leading-relaxed font-light">가입 후 비밀번호는 전화번호 뒤 4자리로 자동 설정됩니다.</p>
       <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
-      <button type="submit" id="signupBtn" class="w-full h-12 bg-[#4F7C6B] text-white rounded-lg font-bold hover:bg-[#386052] transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
+      <button type="submit" id="signupBtn" class="w-full h-12 bg-accent-bg text-white rounded-lg font-bold hover:bg-accent-hover transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
         회원가입
       </button>
     </form>
