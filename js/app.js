@@ -86,15 +86,16 @@ async function loadHomeData() {
     }
 
     // 카테고리 바로가기
-    if (data.categories && data.categories.length > 0) {
-      categoryList.innerHTML = data.categories.map((cat) => `
-        <a href="books.html?category=${encodeURIComponent(cat)}" class="shrink-0 px-5 py-2.5 rounded-full bg-container shadow-soft text-sm font-bold hover:bg-primary hover:text-white transition-colors">
-          ${cat}
-        </a>
-      `).join('');
-    } else {
-      categoryList.innerHTML = '';
-    }
+if (categoryList && data.categories && data.categories.length > 0) {
+  categoryList.innerHTML = data.categories.map((cat) => `
+    <a href="books.html?category=${encodeURIComponent(cat)}"
+       class="shrink-0 px-5 py-2.5 rounded-full bg-container shadow-soft text-sm font-bold hover:bg-primary hover:text-white transition-colors">
+      ${cat}
+    </a>
+  `).join('');
+} else if (categoryList) {
+  categoryList.innerHTML = '';
+}
   } catch (err) {
     newBooksList.innerHTML = '<div class="col-span-full text-center text-red-400 py-12">도서 정보를 불러오는데 실패했습니다.</div>';
     popularBooksList.innerHTML = '';
