@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>소소책방 | 로그인</title>
+  <title>소소책방 | 내정보</title>
+
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="./js/tailwind-config.js"></script>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
-  
+
   <style>
     /* ===========================
         SUIT Font Face
@@ -68,57 +70,74 @@
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/app.js" defer></script>
-  <script src="./js/auth.js" defer></script>
+  <script src="./js/profile.js" defer></script>
 </head>
-<body class="bg-surface flex items-center justify-center min-h-screen font-suit text-onSurface">
 
-  <main class="bg-container p-8 rounded-xl shadow-soft w-full max-w-sm slide-up">
-    <!-- 📌 브랜드 아이덴티티: 소속기관 표기 + 로고 텍스트 컬러를 세이지 그린 테마 및 성곡해옹 폰트로 매핑 -->
-    <div class="text-center mb-6">
-      <p class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-1">남양주시 문화의집</p>
-      <h1 class="font-haeong text-[32px] font-normal tracking-[-0.04em] text-accent-bg mb-1">소소책방</h1>
-      <p class="text-sm font-light text-gray-400 tracking-[-0.02em]">도서대여 시스템</p>
+<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
+
+  <!-- Header -->
+  <header class="bg-container shadow-soft sticky top-0 z-50">
+    <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="index.html" class="flex flex-col leading-none">
+        <span class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-0.5">남양주시 문화의집</span>
+        <span class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-accent-bg">소소책방</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
+        <a href="index.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">홈</a>
+        <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
+        <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
+        
+        <!-- 📌 활성화 메뉴 테마 컬러: 시맨틱 브랜드 컬러 클래스로 통일 -->
+        <a href="profile.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">내정보</a>
+        
+        <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">로그아웃</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 메인 본문 -->
+  <main class="max-w-[1400px] mx-auto px-4 py-8">
+
+    <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em] mb-6">내 정보</h2>
+
+    <div id="profileContainer" class="bg-container rounded-xl shadow-soft p-6 mb-8">
+      <div class="flex justify-center py-8">
+        <span class="material-symbols-outlined animate-spin text-gray-400">
+          progress_activity
+        </span>
+      </div>
     </div>
 
-    <!-- 로그인 / 회원가입 탭 토글러 -->
-    <div class="flex mb-6 bg-surface rounded-lg p-1">
-      <button type="button" id="tab-login" class="flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft transition-colors">로그인</button>
-      <button type="button" id="tab-signup" class="flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors">회원가입</button>
+    <!-- 회원탈퇴 영역 -->
+    <div class="flex justify-end">
+      <!-- 📌 탈퇴 버튼 색상을 서비스 무드에 어울리는 소프트 레드 톤(bg-[#C94A4A] / hover:bg-[#B23B3B])으로 재정비 -->
+      <button
+        id="withdrawBtn"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-suit text-[15px] font-semibold tracking-[-0.015em] text-white bg-[#C94A4A] hover:bg-[#B23B3B] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
+      >
+        <span
+          class="material-symbols-outlined"
+          style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;"
+        >
+          delete
+        </span>
+        회원탈퇴
+      </button>
     </div>
 
-    <!-- 로그인 폼 -->
-    <form id="loginForm" class="flex flex-col gap-4">
-      <div>
-        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
-      </div>
-      <div>
-        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
-      </div>
-      <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
-      <button type="submit" id="loginBtn" class="w-full h-12 bg-accent-bg text-white rounded-lg font-bold hover:bg-accent-hover transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
-        로그인
-      </button>
-    </form>
-
-    <!-- 회원가입 폼 -->
-    <form id="signupForm" class="hidden flex-col gap-4">
-      <div>
-        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
-      </div>
-      <div>
-        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
-      </div>
-      <div>
-        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
-      </div>
-      <p class="text-xs text-gray-400 -mt-1 leading-relaxed font-light">가입 후 비밀번호는 전화번호 뒤 4자리로 자동 설정됩니다.</p>
-      <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
-      <button type="submit" id="signupBtn" class="w-full h-12 bg-accent-bg text-white rounded-lg font-bold hover:bg-accent-hover transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
-        회원가입
-      </button>
-    </form>
   </main>
 
   <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+
+  <!-- 📌 전역 카피라이트 라이선스 푸터 추가 -->
+  <footer class="mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
+    <p>
+      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
+      해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
+      CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+    </p>
+  </footer>
+
 </body>
 </html>
