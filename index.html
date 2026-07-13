@@ -6,13 +6,16 @@
   <title>소소책방 | 홈</title>
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
+            sungkok: ['KookminUniversitySunggokSemiSerif', 'serif'],
             pretendard: ['Pretendard', 'sans-serif']
           },
+
           colors: {
             primary: {
               DEFAULT: "#111111",
@@ -27,9 +30,11 @@
             container: "#FFFFFF",
             onSurface: "#111111"
           },
+
           boxShadow: {
             soft: "0 8px 30px rgba(0,0,0,0.03)"
           },
+
           borderRadius: {
             xl: "18px"
           }
@@ -38,120 +43,252 @@
     }
   </script>
 
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+
   <link rel="stylesheet" href="./css/style.css">
+
+
+  <style>
+
+    @font-face {
+      font-family: 'KookminUniversitySunggokSemiSerif';
+      src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101541@kmu80sungkoksemiserif/kmu80sungkoksemiserif/KMU80SungkokSemiSerif.woff2') format('woff2');
+      font-weight:400;
+      font-display:swap;
+    }
+
+
+    body {
+      font-family:'KookminUniversitySunggokSemiSerif', serif;
+      font-size:16px;
+      letter-spacing:-0.01em;
+    }
+
+
+    button,
+    input,
+    select,
+    textarea {
+      font-family:'Pretendard', sans-serif;
+      font-weight:300;
+      letter-spacing:0;
+    }
+
+
+  </style>
+
 
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
+
 </head>
 
-<body class="bg-surface text-onSurface font-pretendard">
+
+<body class="bg-surface text-onSurface">
+
 
 <header class="bg-container shadow-soft sticky top-0 z-50">
+
   <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-    <a href="index.html" class="text-xl font-bold tracking-tight">소소책방</a>
-    <nav class="hidden md:flex items-center gap-1 text-[15px] font-semibold tracking-[-0.01em]">
-<a href="index.html"
-   class="px-4 py-2 rounded-full bg-[#E04825] text-white font-semibold shadow-sm transition-all">
-  홈
-</a>
-<a href="books.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  도서대여
-</a>
 
-<a href="rentals.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  대여현황
-</a>
 
-<a href="profile.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  내정보
-</a>
+    <!-- 로고 -->
+    <a href="index.html"
+       class="text-2xl font-normal tracking-[-0.015em]">
+      소소책방
+    </a>
 
-<button
-  id="logoutBtn"
-  class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
-  로그아웃
-</button>
+
+
+    <!-- 메뉴 -->
+    <nav class="hidden md:flex items-center gap-1 text-[16px] font-normal tracking-[-0.01em]">
+
+
+      <a href="index.html"
+         class="px-4 py-2 rounded-full bg-[#E04825] text-white font-light shadow-sm transition-all">
+        홈
+      </a>
+
+
+      <a href="books.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        도서대여
+      </a>
+
+
+      <a href="rentals.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        대여현황
+      </a>
+
+
+      <a href="profile.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        내정보
+      </a>
+
+
+      <button
+        id="logoutBtn"
+        class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
+        로그아웃
+      </button>
+
+
+    </nav>
+
   </div>
+
 </header>
-  </header>
 
-  <main class="max-w-[1400px] mx-auto px-4 py-10 flex flex-col gap-16">
 
-    <!-- 검색 히어로 -->
-    <section class="text-center flex flex-col items-center gap-6 py-6">
-      <h1 class="text-4xl font-bold tracking-[-0.03em] leading-tight">
-        오늘은 어떤 책을 만나볼까요?
-      </h1>
 
-      <form id="homeSearchForm" class="relative w-full max-w-lg">
-        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-          search
-        </span>
+<main class="max-w-[1400px] mx-auto px-4 py-10 flex flex-col gap-16">
 
-        <input
-          type="text"
-          id="homeSearchInput"
-          placeholder="도서명, 저자, 출판사, ISBN"
-          class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none outline-none focus:ring-2 focus:ring-accent-bg text-base tracking-[-0.01em] leading-6">
-      </form>
-    </section>
 
-    <!-- 신간 도서 -->
-  
-    <section>
-      <div class="flex items-center justify-between mb-5">
 
-        <h2 class="text-2xl font-bold tracking-[-0.03em] leading-tight">
-          신간 도서
-        </h2>
+  <!-- 검색 히어로 -->
 
-        <a
-          href="books.html?sort=new"
-          class="px-3 py-2 text-sm font-medium tracking-[-0.01em] leading-6 text-gray-400 hover:text-accent-bg transition-colors">
-          전체보기
-        </a>
+  <section class="text-center flex flex-col items-center gap-6 py-6">
 
-      </div>
 
-      <!-- 한 줄에 1개씩 출력 -->
-      <div id="newBooksList" class="flex flex-col gap-3"></div>
+    <h1 class="text-[40px] font-normal tracking-[-0.02em] leading-tight">
 
-    </section>
+      오늘은 어떤 책을 만나볼까요?
 
-    <!-- 인기 도서 -->
-    <section>
+    </h1>
 
-      <div class="flex items-center justify-between mb-5">
 
-        <h2 class="text-2xl font-bold tracking-[-0.03em] leading-tight">
-          인기 도서 TOP 5
-        </h2>
 
-        <a
-          href="books.html?sort=popular"
-          class="px-3 py-2 text-sm font-medium tracking-[-0.01em] leading-6 text-gray-400 hover:text-accent-bg transition-colors">
-          전체보기
-        </a>
+    <form id="homeSearchForm"
+          class="relative w-full max-w-lg">
 
-      </div>
 
-      <div id="popularBooksList" class="flex flex-col gap-3"></div>
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
 
-    </section>
+        search
 
-  </main>
+      </span>
 
-  <div
-    id="toastContainer"
-    class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
-  </div>
+
+
+      <input
+        type="text"
+        id="homeSearchInput"
+        placeholder="도서명, 저자, 출판사, ISBN"
+        class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none outline-none focus:ring-2 focus:ring-accent-bg text-base tracking-[-0.01em] leading-6">
+
+
+    </form>
+
+
+  </section>
+
+
+
+
+
+  <!-- 신간 도서 -->
+
+
+  <section>
+
+
+    <div class="flex items-center justify-between mb-5">
+
+
+      <h2 class="text-[28px] font-normal tracking-[-0.02em] leading-tight">
+
+        신간 도서
+
+      </h2>
+
+
+
+      <a
+        href="books.html?sort=new"
+        class="px-3 py-2 text-sm font-light tracking-[-0.01em] leading-6 text-gray-400 hover:text-accent-bg transition-colors">
+
+        전체보기
+
+      </a>
+
+
+    </div>
+
+
+
+    <div id="newBooksList"
+         class="flex flex-col gap-3">
+
+    </div>
+
+
+  </section>
+
+
+
+
+
+
+  <!-- 인기 도서 -->
+
+
+  <section>
+
+
+    <div class="flex items-center justify-between mb-5">
+
+
+      <h2 class="text-[28px] font-normal tracking-[-0.02em] leading-tight">
+
+        인기 도서 TOP 5
+
+      </h2>
+
+
+
+      <a
+        href="books.html?sort=popular"
+        class="px-3 py-2 text-sm font-light tracking-[-0.01em] leading-6 text-gray-400 hover:text-accent-bg transition-colors">
+
+        전체보기
+
+      </a>
+
+
+    </div>
+
+
+
+    <div id="popularBooksList"
+         class="flex flex-col gap-3">
+
+    </div>
+
+
+  </section>
+
+
+
+</main>
+
+
+
+
+
+<div
+  id="toastContainer"
+  class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
+
+</div>
+
+
 
 </body>
 </html>
