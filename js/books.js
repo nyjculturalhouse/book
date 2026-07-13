@@ -21,8 +21,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sortSelect = document.getElementById('sortSelect');
   const categorySelect = document.getElementById('categorySelect');
 
+if (availableBtn) {
 
-  availableBtn.addEventListener("click", () => {
+availableBtn.addEventListener("click", () => {
 
       availableOnly.checked = !availableOnly.checked;
 
