@@ -14,11 +14,16 @@ const UI = {
     if (!container) return;
 
     const toast = document.createElement('div');
-    const bg = type === 'error' ? 'bg-primary' : 'bg-primary';
+    
+    // 📌 새로운 브랜드 컬러(Primary Ink Black) 가이드라인 적용을 위해 bg-primary 사용
+    const bg = 'bg-primary'; 
     const iconName = type === 'error' ? 'error' : 'check_circle';
-    const iconColor = type === 'error' ? 'text-red-400' : 'text-accent-bg';
+    
+    // 📌 에러는 기존 레드를 유지, 성공(success) 시 주황색 대신 새로운 브랜드 컬러인 Sage Green(#4F7C6B) 매핑
+    const iconColor = type === 'error' ? 'text-red-400' : 'text-[#4F7C6B]';
 
-    toast.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-soft flex items-center gap-2 text-sm font-medium`;
+    // 📌 SUIT 폰트 세부 규칙 (14px, Medium, 자간 -0.015em) 완벽 반영
+    toast.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-soft flex items-center gap-2 text-[14px] font-medium tracking-[-0.015em] font-suit`;
     toast.innerHTML = `
       <span class="material-symbols-outlined text-[18px] ${iconColor}">${iconName}</span>
       <span>${message}</span>
@@ -45,14 +50,18 @@ const UI = {
 
     const root = document.createElement('div');
     root.id = 'ui-modal-root';
-    root.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/40 modal-backdrop px-4';
+    root.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/40 modal-backdrop px-4 font-suit';
+    
+    // 📌 모달 제목(18px Semibold), 본문(14px Light) 스타일 조정
+    // 📌 모달 버튼들에 CSS로 추가하신 1번 효과인 쫀득한 팅김 효과 클래스('btn-bounce')를 정밀하게 매핑
+    // 📌 확인 버튼에 새로운 세이지 그린 컬러 시스템 적용 (bg-accent / hover 시 Deep Sage로 전환)
     root.innerHTML = `
-      <div class="bg-container w-full max-w-[340px] rounded-xl shadow-soft p-6 modal-box">
-        <h3 class="text-lg font-bold mb-3">${title}</h3>
-        <div class="text-sm text-gray-600 leading-relaxed mb-6">${descriptionHtml}</div>
-        <div class="flex gap-2">
-          <button id="ui-modal-cancel" class="flex-1 py-2.5 rounded-lg bg-surface font-bold hover:bg-gray-200 transition-colors">취소</button>
-          <button id="ui-modal-confirm" class="flex-1 py-2.5 rounded-lg bg-primary text-white font-bold hover:bg-primary-hover transition-colors">${confirmText}</button>
+      <div class="bg-container w-full max-w-[340px] rounded-xl shadow-soft p-6 modal-box text-primary">
+        <h3 class="text-[18px] font-semibold mb-2 tracking-[-0.025em]">${title}</h3>
+        <div class="text-[14px] font-light text-gray-600 leading-relaxed mb-6 tracking-[-0.015em]">${descriptionHtml}</div>
+        <div class="flex gap-2 text-[15px] font-medium tracking-[-0.015em]">
+          <button id="ui-modal-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-surface font-medium hover:bg-gray-200 text-primary transition-colors">취소</button>
+          <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent text-accent-text font-medium hover:bg-[#386052] transition-colors">${confirmText}</button>
         </div>
       </div>
     `;
@@ -77,7 +86,6 @@ const UI = {
         await onConfirm();
         close();
       } catch (err) {
-        // onConfirm 내부에서 자체 에러 처리를 하지 않은 경우를 대비한 안전장치
         btn.disabled = false;
         btn.innerHTML = original;
       }
