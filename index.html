@@ -109,7 +109,7 @@ input, button, select, textarea {
 
   <!-- 📌 메인 레이아웃: 헤더와 동일한 폭(max-w-[1400px])으로 통일하고, 실제 콘텐츠는 가독성을 위해 내부에서 좁은 컬럼으로 중앙 정렬 -->
   <main class="max-w-[1400px] mx-auto px-4 py-10">
-    <div class="max-w-md mx-auto flex flex-col gap-16">
+    <div class="mx-auto flex flex-col gap-16">
 
       <!-- 검색 히어로 섹션 -->
       <section class="text-center flex flex-col items-center gap-6 py-6">
@@ -127,13 +127,6 @@ input, button, select, textarea {
             placeholder="도서명, 저자, 출판사, ISBN"
             class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none outline-none focus:ring-2 focus:ring-accent-bg text-[15px] font-normal tracking-[-0.015em]">
         </form>
-      </section>
-
-      <!-- 카테고리 영역 -->
-      <section class="flex flex-col gap-4">
-        <div id="categoryList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <!-- app.js를 통해 동적으로 카테고리 칩들이 주입됩니다 -->
-        </div>
       </section>
 
       <!-- 신간 도서 목록 -->
@@ -172,7 +165,8 @@ input, button, select, textarea {
   <footer id="soso-license-footer" class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
     <p>
       본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+      해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
+      CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
     </p>
   </footer>
 
