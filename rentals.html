@@ -9,7 +9,10 @@
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { pretendard: ['Pretendard', 'sans-serif'] },
+          fontFamily: { 
+            suit: ['Suit', 'sans-serif'],
+            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+          },
           colors: {
             primary: { DEFAULT: "#111111", hover: "#222222" },
             accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
@@ -24,36 +27,91 @@
     }
   </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <link rel="stylesheet" href="./css/style.css">
+  
+  <style>
+    /* ===========================
+       SUIT Font Face
+    =========================== */
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    /* ===========================
+       KookminUniversityHaeongSans Font Face
+    =========================== */
+    @font-face {
+      font-family: 'KookminUniversityHaeongSans';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Suit', sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+    input, button, select, textarea {
+      font-family: 'Suit', sans-serif;
+    }
+    .font-haeong {
+      font-family: 'KookminUniversityHaeongSans', sans-serif;
+    }
+    .font-suit {
+      font-family: 'Suit', sans-serif;
+    }
+  </style>
+
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/rentals.js" defer></script>
 </head>
-<body class="bg-surface text-onSurface font-pretendard">
+<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
   <!-- Header -->
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="text-xl font-bold tracking-tight">소소책방</a>
-      <nav class="hidden md:flex items-center gap-6 font-medium text-sm">
-        <a href="index.html" class="hover:text-accent-bg transition-colors">홈</a>
-        <a href="books.html" class="hover:text-accent-bg transition-colors">도서대여</a>
-        <a href="rentals.html" class="text-accent-bg font-bold">대여현황</a>
-        <a href="profile.html" class="hover:text-accent-bg transition-colors">내정보</a>
-        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition-colors">로그아웃</button>
+      <a href="index.html" class="font-haeong text-[26px] font-normal tracking-[-0.04em]">소소책방</a>
+      <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
+        <a href="index.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">홈</a>
+        <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
+        <a href="rentals.html" class="px-4 py-2 rounded-full bg-[#E04825] text-white font-medium shadow-sm">대여현황</a>
+        <a href="profile.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">내정보</a>
+        <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">로그아웃</button>
       </nav>
     </div>
   </header>
 
   <main class="max-w-[1400px] mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-6">나의 대여 현황</h2>
+    <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em] mb-6">나의 대여 현황</h2>
 
     <!-- Tabs -->
-    <div class="flex gap-4 border-b border-gray-200 mb-6">
-      <button id="tab-current" class="pb-3 px-2 font-bold text-accent-bg border-b-2 border-accent-bg transition-colors">현재 대여</button>
-      <button id="tab-history" class="pb-3 px-2 font-medium text-gray-500 hover:text-primary transition-colors">대여 이력</button>
+    <div class="flex gap-4 border-b border-gray-200 mb-6 font-suit text-[16px] font-medium tracking-[-0.02em]">
+      <button id="tab-current" class="pb-3 px-2 font-semibold text-accent-bg border-b-2 border-accent-bg transition-colors">현재 대여</button>
+      <button id="tab-history" class="pb-3 px-2 text-gray-500 hover:text-primary transition-colors">대여 이력</button>
     </div>
 
     <!-- Content Containers -->
