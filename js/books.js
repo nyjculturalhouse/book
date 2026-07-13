@@ -53,8 +53,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   });
 
-});
-
   // URL 쿼리 파라미터 처리
   const urlParams = new URLSearchParams(window.location.search);
 
