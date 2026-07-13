@@ -9,6 +9,7 @@
 <script src="./js/tailwind-config.js"></script>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+<link rel="stylesheet" href="./css/style.css">
 
 <style>
 /* ===========================
@@ -74,88 +75,101 @@ input, button, select, textarea {
 <script src="./js/app.js" defer></script>
 </head>
 
-<body class="bg-surface text-onSurface">
+<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
-  <!-- 📌 상단 네비게이션 헤더 (원래의 콤팩트한 max-w-md 규격으로 100% 원상 복구) -->
-  <header class="sticky top-0 z-40 w-full bg-container/80 backdrop-blur-md border-b border-gray-100">
-    <div class="flex items-center justify-between max-w-md mx-auto h-14 px-4">
+  <!-- 📌 상단 네비게이션 헤더 (다른 페이지들과 동일한 max-w-[1400px] 규격 + 전체 메뉴로 통일) -->
+  <header class="bg-container shadow-soft sticky top-0 z-50">
+    <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
+
       <a href="index.html" class="flex flex-col leading-none">
         <span class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-0.5">남양주시 문화의집</span>
-        <span class="text-lg font-black tracking-tighter text-accent-bg">소소책방</span>
+        <span class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-accent-bg">소소책방</span>
       </a>
 
-      <div class="flex items-center gap-2">
-        <a href="mypage.html" class="p-2 text-gray-600 hover:text-accent-bg transition-colors">
-          <span class="material-symbols-outlined">account_circle</span>
+      <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
+        <a href="index.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">
+          홈
         </a>
-        <button id="logoutBtn" class="btn-bounce text-xs font-bold px-3 py-1.5 rounded-md bg-surface text-gray-500 hover:text-red-500 transition-colors">
+        <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          도서대여
+        </a>
+        <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          대여현황
+        </a>
+        <a href="profile.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          내정보
+        </a>
+        <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
           로그아웃
         </button>
-      </div>
+      </nav>
+
     </div>
   </header>
 
-  <!-- 📌 메인 레이아웃 영역 (원래의 max-w-md 규격에 맞춰 정렬) -->
-  <main class="max-w-md mx-auto px-4 py-10 flex flex-col gap-16">
+  <!-- 📌 메인 레이아웃: 헤더와 동일한 폭(max-w-[1400px])으로 통일하고, 실제 콘텐츠는 가독성을 위해 내부에서 좁은 컬럼으로 중앙 정렬 -->
+  <main class="max-w-[1400px] mx-auto px-4 py-10">
+    <div class="max-w-md mx-auto flex flex-col gap-16">
 
-    <!-- 검색 히어로 섹션 -->
-    <section class="text-center flex flex-col items-center gap-6 py-6">
-      <h1 class="font-haeong text-[42px] font-normal leading-[1.3] tracking-[-0.045em]">
-        오늘은 어떤 책을 만나볼까요?
-      </h1>
+      <!-- 검색 히어로 섹션 -->
+      <section class="text-center flex flex-col items-center gap-6 py-6">
+        <h1 class="font-haeong text-[42px] font-normal leading-[1.3] tracking-[-0.045em]">
+          오늘은 어떤 책을 만나볼까요?
+        </h1>
 
-      <form id="homeSearchForm" class="relative w-full">
-        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-          search
-        </span>
-        <input
-          type="text"
-          id="homeSearchInput"
-          placeholder="도서명, 저자, 출판사, ISBN"
-          class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none outline-none focus:ring-2 focus:ring-accent-bg text-[15px] font-normal tracking-[-0.015em]">
-      </form>
-    </section>
+        <form id="homeSearchForm" class="relative w-full">
+          <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+            search
+          </span>
+          <input
+            type="text"
+            id="homeSearchInput"
+            placeholder="도서명, 저자, 출판사, ISBN"
+            class="w-full h-14 pl-12 pr-4 bg-container rounded-xl shadow-soft border-none outline-none focus:ring-2 focus:ring-accent-bg text-[15px] font-normal tracking-[-0.015em]">
+        </form>
+      </section>
 
-    <!-- 카테고리 영역 -->
-    <section class="flex flex-col gap-4">
-      <div id="categoryList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-        <!-- app.js를 통해 동적으로 카테고리 칩들이 주입됩니다 -->
-      </div>
-    </section>
+      <!-- 카테고리 영역 -->
+      <section class="flex flex-col gap-4">
+        <div id="categoryList" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <!-- app.js를 통해 동적으로 카테고리 칩들이 주입됩니다 -->
+        </div>
+      </section>
 
-    <!-- 신간 도서 목록 -->
-    <section>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em]">신간 도서</h2>
-        <a href="books.html?sort=new" class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-400 hover:text-accent-bg">
-          전체보기
-        </a>
-      </div>
-      <div id="newBooksList" class="flex flex-col gap-3">
-        <!-- 동적으로 주입됩니다 -->
-      </div>
-    </section>
+      <!-- 신간 도서 목록 -->
+      <section>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em]">신간 도서</h2>
+          <a href="books.html?sort=new" class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-400 hover:text-accent-bg">
+            전체보기
+          </a>
+        </div>
+        <div id="newBooksList" class="flex flex-col gap-3">
+          <!-- 동적으로 주입됩니다 -->
+        </div>
+      </section>
 
-    <!-- 인기 도서 TOP 5 -->
-    <section>
-      <div class="flex items-center justify-between mb-5">
-        <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em]">인기 도서 TOP 5</h2>
-        <a href="books.html?sort=popular" class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-400 hover:text-accent-bg">
-          전체보기
-        </a>
-      </div>
-      <div id="popularBooksList" class="flex flex-col gap-3">
-        <!-- 동적으로 주입됩니다 -->
-      </div>
-    </section>
-    
+      <!-- 인기 도서 TOP 5 -->
+      <section>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em]">인기 도서 TOP 5</h2>
+          <a href="books.html?sort=popular" class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-400 hover:text-accent-bg">
+            전체보기
+          </a>
+        </div>
+        <div id="popularBooksList" class="flex flex-col gap-3">
+          <!-- 동적으로 주입됩니다 -->
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <!-- 토스트 알림 컴포넌트 -->
   <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
 
-  <!-- 푸터 저작권 마크업 -->
-  <footer class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
+  <!-- 📌 라이선스 푸터: id="soso-license-footer"를 명시해 app.js의 자동 삽입과 중복되지 않도록 처리 -->
+  <footer id="soso-license-footer" class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
     <p>
       본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
       해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
