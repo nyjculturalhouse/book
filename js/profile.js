@@ -11,19 +11,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('profileContainer');
 
   // 전화번호 포맷 (01039413445 → 010-3941-3445)
-  function formatPhone(phone) {
-    const num = String(phone || '').replace(/\D/g, '');
+ function formatPhone(phone) {
+  let num = String(phone || '').replace(/\D/g, '');
 
-    if (num.length === 11) {
-      return num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-
-    if (num.length === 10) {
-      return num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-    }
-
-    return phone || '';
+  // 앞자리 0이 사라진 경우 복원
+  if (num.length === 10 && !num.startsWith('0')) {
+    num = '0' + num;
   }
+
+  if (num.length === 11) {
+    return num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+  }
+
+  if (num.length === 10) {
+    return num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+  }
+
+  return phone || '';
+}
 
   try {
     const data = await fetchAPI('getUserProfile', { userId: user.id });
