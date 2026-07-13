@@ -23,17 +23,20 @@
       }
     }
   </script>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <link rel="stylesheet" href="./css/style.css">
+
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/books.js" defer></script>
 </head>
+
 <body class="bg-surface text-onSurface font-pretendard">
-  <!-- Header (index.html과 동일하게 구성) -->
+
 <header class="bg-container shadow-soft sticky top-0 z-50">
   <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
 
@@ -74,75 +77,107 @@
   </div>
 </header>
 
-  <main class="max-w-[1400px] mx-auto px-4 py-8">
 
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8">
+<main class="max-w-[1400px] mx-auto px-4 py-8">
 
-        <!-- 검색창 -->
-        <div class="relative w-full lg:max-w-2xl">
 
-            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                search
-            </span>
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8">
 
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="도서명, 저자, 출판사, ISBN"
-                class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-[#FF5A36] text-base">
 
-        </div>
+<div class="relative w-full lg:max-w-2xl">
 
-        <!-- 필터 -->
-        <div class="flex items-center gap-3 flex-wrap">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+search
+</span>
 
-            <button
-                id="availableBtn"
-                type="button"
-                class="h-14 px-6 rounded-2xl bg-white shadow-soft font-semibold text-gray-700 transition-all hover:bg-[#FFF3EF]">
-                대여가능만 보기
-            </button>
 
-            <input
-                id="availableOnly"
-                type="checkbox"
-                class="hidden">
+<input
+type="text"
+id="searchInput"
+placeholder="도서명, 저자, 출판사, ISBN"
+class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-[#FF5A36] text-base">
 
-            <select
-                 id="sortSelect"
-                 class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-[#FF5A36]">
 
-                <option value="new">신간순</option>
-                <option value="title">제목순</option>
-                <option value="popular">인기순</option>
+</div>
 
-            </select>
 
-            <select
-                <select
-                 id="categorySelect"
-                 class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-[#FF5A36]">
 
-                <option value="">전체 카테고리</option>
+<div class="flex items-center gap-3 flex-wrap">
 
-            </select>
 
-        </div>
+<button
+id="availableBtn"
+type="button"
+class="h-14 px-6 rounded-2xl bg-white shadow-soft font-semibold text-gray-700 transition-all hover:bg-[#FFF3EF]">
+대여가능만 보기
+</button>
 
-    </div>
-    
-        <!-- 선택된 카테고리 필터 표시 -->
-    <div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 text-sm">
-      <span class="text-gray-500">카테고리:</span>
-      <span id="categoryFilterLabel" class="px-3 py-1 bg-primary text-white rounded-full font-bold"></span>
-      <button id="clearCategoryBtn" class="text-gray-400 hover:text-red-500 underline">해제</button>
-    </div>
 
-    <div id="booksList" class="flex flex-col gap-4">
-      <!-- Books will be injected here -->
-    </div>
-    <div id="loadingTrigger" class="h-20 flex items-center justify-center mt-8"></div>
-  </main>
-  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+<input
+id="availableOnly"
+type="checkbox"
+class="hidden">
+
+
+
+<select
+id="sortSelect"
+class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-[#FF5A36]">
+
+<option value="new">신간순</option>
+<option value="title">제목순</option>
+<option value="popular">인기순</option>
+
+</select>
+
+
+
+
+<select
+id="categorySelect"
+class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-[#FF5A36]">
+
+<option value="">전체 카테고리</option>
+
+</select>
+
+
+</div>
+
+
+</div>
+
+
+<div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 text-sm">
+
+<span class="text-gray-500">
+카테고리:
+</span>
+
+<span id="categoryFilterLabel" class="px-3 py-1 bg-primary text-white rounded-full font-bold"></span>
+
+<button id="clearCategoryBtn" class="text-gray-400 hover:text-red-500 underline">
+해제
+</button>
+
+</div>
+
+
+
+<div id="booksList" class="flex flex-col gap-4">
+</div>
+
+
+<div id="loadingTrigger" class="h-20 flex items-center justify-center mt-8">
+</div>
+
+
+</main>
+
+
+<div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
+</div>
+
+
 </body>
 </html>
