@@ -6,42 +6,100 @@
   <title>소소책방 | 로그인</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        suit: ['Suit', 'sans-serif'],
-        haeong: ['KookminUniversityHaeongSans', 'sans-serif']
-      },
-      colors: {
-        primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
-        accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
-        surface: "#F7F6F2",
-        container: "#FFFFFF",
-        borderColor: "#E5E5E0"
-      },
-      boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-      borderRadius: { xl: "18px" }
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            suit: ['Suit', 'sans-serif'],
+            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+          },
+          colors: {
+            primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
+            accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
+            surface: "#F7F6F2",
+            container: "#FFFFFF",
+            borderColor: "#E5E5E0"
+          },
+          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
+          borderRadius: { xl: "18px" }
+        }
+      }
     }
-  }
-}
   </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <link rel="stylesheet" href="./css/style.css">
-  <script src="./js/app.js" defer></script>
+  
+  <style>
+    /* ===========================
+        SUIT Font Face
+    =========================== */
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    /* ===========================
+        KookminUniversityHaeongSans Font Face
+    =========================== */
+    @font-face {
+      font-family: 'KookminUniversityHaeongSans';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Suit', sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+    input, button, select, textarea {
+      font-family: 'Suit', sans-serif;
+    }
+    .font-haeong {
+      font-family: 'KookminUniversityHaeongSans', sans-serif;
+    }
+    .font-suit {
+      font-family: 'Suit', sans-serif;
+    }
+  </style>
+
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
+  <script src="./js/utils.js" defer></script>
+  <script src="./js/app.js" defer></script>
   <script src="./js/auth.js" defer></script>
 </head>
-<body class="bg-surface flex items-center justify-center min-h-screen font-pretendard text-onSurface">
+<body class="bg-surface flex items-center justify-center min-h-screen font-suit text-onSurface">
+
   <main class="bg-container p-8 rounded-xl shadow-soft w-full max-w-sm slide-up">
+    <!-- 📌 브랜드 아이덴티티: 로고 텍스트 컬러를 세이지 그린 테마 및 성곡해옹 폰트로 매핑 -->
     <div class="text-center mb-6">
-      <h1 class="text-2xl font-bold tracking-tight mb-2">소소책방</h1>
-      <p class="text-sm text-gray-500">도서대여 시스템</p>
+      <h1 class="font-haeong text-[32px] font-normal tracking-[-0.04em] text-[#4F7C6B] mb-1">소소책방</h1>
+      <p class="text-sm font-light text-gray-400 tracking-[-0.02em]">도서대여 시스템</p>
     </div>
 
-    <!-- 로그인 / 회원가입 탭 -->
+    <!-- 로그인 / 회원가입 탭 토글러 -->
     <div class="flex mb-6 bg-surface rounded-lg p-1">
       <button type="button" id="tab-login" class="flex-1 h-10 rounded-md text-sm font-bold bg-container shadow-soft transition-colors">로그인</button>
       <button type="button" id="tab-signup" class="flex-1 h-10 rounded-md text-sm font-bold text-gray-400 transition-colors">회원가입</button>
@@ -50,12 +108,13 @@ tailwind.config = {
     <!-- 로그인 폼 -->
     <form id="loginForm" class="flex flex-col gap-4">
       <div>
-        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
       </div>
-      <button type="submit" id="loginBtn" class="w-full h-12 bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors mt-2 flex items-center justify-center">
+      <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
+      <button type="submit" id="loginBtn" class="w-full h-12 bg-[#4F7C6B] text-white rounded-lg font-bold hover:bg-[#386052] transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
         로그인
       </button>
     </form>
@@ -63,20 +122,22 @@ tailwind.config = {
     <!-- 회원가입 폼 -->
     <form id="signupForm" class="hidden flex-col gap-4">
       <div>
-        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all" required>
+        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-[#4F7C6B] outline-none transition-all text-[14px]" required>
       </div>
-      <p class="text-xs text-gray-400 -mt-1 leading-relaxed">가입 후 비밀번호는 전화번호 뒤 4자리로 자동 설정됩니다.</p>
-      <button type="submit" id="signupBtn" class="w-full h-12 bg-primary text-white rounded-lg font-bold hover:bg-primary-hover transition-colors mt-2 flex items-center justify-center">
+      <p class="text-xs text-gray-400 -mt-1 leading-relaxed font-light">가입 후 비밀번호는 전화번호 뒤 4자리로 자동 설정됩니다.</p>
+      <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
+      <button type="submit" id="signupBtn" class="w-full h-12 bg-[#4F7C6B] text-white rounded-lg font-bold hover:bg-[#386052] transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
         회원가입
       </button>
     </form>
   </main>
+
   <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
 </body>
 </html>
