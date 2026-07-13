@@ -64,6 +64,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 회원탈퇴 로직
   const withdrawBtn = document.getElementById('withdrawBtn');
   withdrawBtn.addEventListener('click', () => {
+    // 📌 비밀번호 입력창에 'input-field' 매핑 (클릭 시 은은한 레드 포커스로 작동하도록 설계)
+    // 📌 취소/탈퇴 버튼들에 'btn-bounce'를 매핑하여 쫀득하게 튕기는 탄성 효과 부여
     const modalHtml = `
       <div id="pw-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 fade-in px-4 font-suit">
         <div class="bg-container w-full max-w-[320px] rounded-xl shadow-soft p-6 slide-up">
@@ -73,15 +75,15 @@ document.addEventListener('DOMContentLoaded', async () => {
           <input
             type="password"
             id="withdrawPw"
-            class="w-full h-10 px-3 border border-gray-300 rounded mb-6 outline-none focus:border-red-500 text-[15px] font-normal tracking-[-0.015em]"
+            class="input-field w-full h-10 px-3 border border-gray-300 rounded mb-6 outline-none focus:border-red-500 text-[15px] font-normal tracking-[-0.015em]"
             placeholder="비밀번호">
 
           <div class="flex gap-2 text-[15px] font-normal tracking-[-0.015em]">
-            <button id="pw-cancel" class="flex-1 py-2.5 rounded-lg bg-gray-100 font-medium hover:bg-gray-200 transition">
+            <button id="pw-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-gray-100 font-medium hover:bg-gray-200 transition">
               취소
             </button>
 
-            <button id="pw-confirm" class="flex-1 py-2.5 rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 transition">
+            <button id="pw-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-red-500 text-white font-medium hover:bg-red-600 transition">
               탈퇴
             </button>
           </div>
