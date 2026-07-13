@@ -19,12 +19,13 @@ const Utils = {
   },
 
   /**
-   * 날짜 문자열/Date 객체를 YYYY-MM-DD 형식으로 변환
+   * 날짜 문자열/Date 객체를 YYYY. MM. DD 형식으로 깔끔하게 변환
+   * (기존 대시(-) 포맷을 점(.)과 공백으로 변경하여 정돈된 인상을 줍니다)
    */
   formatDate(dateString) {
     if (!dateString) return '-';
     const date = new Date(dateString);
     if (isNaN(date.getTime())) return '-';
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, '0')}. ${String(date.getDate()).padStart(2, '0')}`;
   }
 };
