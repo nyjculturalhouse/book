@@ -109,7 +109,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #4F7C6B; /* Accent: Sage Green */
+  outline: 2px solid var(--color-accent); /* Accent: Sage Green */
   outline-offset: 2px;
 }
 
@@ -134,7 +134,7 @@ select:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4F7C6B; /* Accent: Sage Green */
+    background: var(--color-accent); /* Accent: Sage Green */
 }
 
 /* Firefox */
@@ -182,7 +182,7 @@ html {
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .input-field:focus {
-  border-color: #4F7C6B; /* Sage Green */
+  border-color: var(--color-accent); /* Sage Green */
   box-shadow: 0 0 0 4px rgba(79, 124, 107, 0.12); /* 은은한 잔상 */
 }
 
@@ -192,7 +192,7 @@ html {
   top: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(90deg, #4F7C6B, #386052);
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-hover));
   z-index: 9999;
   animation: loadProgress 1.5s infinite linear;
   transform-origin: left;
