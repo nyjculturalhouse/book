@@ -7,24 +7,24 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
     tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        suit: ['Suit', 'sans-serif'],
-        haeong: ['KookminUniversityHaeongSans', 'sans-serif']
-      },
-      colors: {
-        primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
-        accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
-        surface: "#F7F6F2",
-        container: "#FFFFFF",
-        borderColor: "#E5E5E0"
-      },
-      boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-      borderRadius: { xl: "18px" }
+      theme: {
+        extend: {
+          fontFamily: {
+            suit: ['Suit', 'sans-serif'],
+            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+          },
+          colors: {
+            primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
+            accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
+            surface: "#F7F6F2",
+            container: "#FFFFFF",
+            borderColor: "#E5E5E0"
+          },
+          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
+          borderRadius: { xl: "18px" }
+        }
+      }
     }
-  }
-}
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -32,7 +32,7 @@
 
   <style>
     /* ===========================
-       SUIT Font Face
+        SUIT Font Face
     =========================== */
     @font-face {
       font-family: 'Suit';
@@ -60,7 +60,7 @@
     }
 
     /* ===========================
-       KookminUniversityHaeongSans Font Face
+        KookminUniversityHaeongSans Font Face
     =========================== */
     @font-face {
       font-family: 'KookminUniversityHaeongSans';
@@ -108,8 +108,9 @@
         홈
       </a>
 
+      <!-- 📌 기존 bg-[#E04825]에서 브랜드 액센트 컬러인 bg-[#4F7C6B]로 헤더 활성화 탭 수정 완료 -->
       <a href="books.html"
-         class="px-4 py-2 rounded-full bg-[#E04825] text-white font-medium shadow-sm">
+         class="px-4 py-2 rounded-full bg-[#4F7C6B] text-white font-medium shadow-sm">
         도서대여
       </a>
 
