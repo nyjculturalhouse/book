@@ -65,121 +65,160 @@
     }
   </style>
 
+  <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
-  <script src="./js/app.js" defer></script>
   <script src="./js/books.js" defer></script>
 </head>
 
 <body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
-  <!-- 📌 상단 네비게이션 헤더 (데스크톱 와이드 핏 유지 + 주황색 완전 제거) -->
-  <header class="bg-container shadow-soft sticky top-0 z-50">
-    <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
+<header class="bg-container shadow-soft sticky top-0 z-50">
+  <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
 
-      <!-- 로고 텍스트에 세이지 그린 아이덴티티 + 상단 소속기관 표기 부여 -->
-      <a href="index.html" class="flex flex-col leading-none">
-        <span class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-0.5">남양주시 문화의집</span>
-        <span class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-accent-bg">소소책방</span>
+    <a href="index.html" class="flex flex-col leading-none">
+      <span class="text-[8px] font-suit font-medium tracking-[-0.04em] text-gray-400 mb-0.5">남양주시 문화의집</span>
+      <span class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-accent-bg">소소책방</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
+
+      <a href="index.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+        홈
       </a>
 
-      <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
-        <a href="index.html" class="px-4 py-2 rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
-          홈
-        </a>
-        <!-- 브랜드 액센트 컬러 시맨틱 클래스로 통일 -->
-        <a href="books.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">
-          도서대여
-        </a>
-        <a href="rentals.html" class="px-4 py-2 rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
-          대여현황
-        </a>
-        <a href="profile.html" class="px-4 py-2 rounded-full text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
-          내정보
-        </a>
-        <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
-          로그아웃
-        </button>
-      </nav>
+      <!-- 📌 브랜드 액센트 컬러 시맨틱 클래스로 통일 -->
+      <a href="books.html"
+         class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">
+        도서대여
+      </a>
 
-    </div>
-  </header>
+      <a href="rentals.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+        대여현황
+      </a>
 
-  <!-- 메인 레이아웃 영역 -->
-  <main class="max-w-[1400px] mx-auto px-4 py-8">
+      <a href="profile.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+        내정보
+      </a>
 
-    <!-- 필터링 & 검색 상단 바 -->
-    <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8">
-      
-      <!-- 검색 필드 -->
-      <div class="relative w-full lg:max-w-2xl">
-        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-          search
-        </span>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="도서명, 저자, 출판사, ISBN"
-          class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-accent-bg font-suit text-[15px] font-normal tracking-[-0.015em]">
-      </div>
+      <button
+        id="logoutBtn"
+        class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
+        로그아웃
+      </button>
 
-      <!-- 제어 도구 모음 -->
-      <div class="flex items-center gap-3 flex-wrap w-full lg:w-auto justify-end">
-        
-        <button
-          id="availableBtn"
-          type="button"
-          class="h-14 px-6 rounded-2xl bg-white shadow-soft font-suit text-[16px] font-medium tracking-[-0.02em] text-gray-700 transition-all hover:bg-gray-100">
-          대여가능도서 보기
-        </button>
+    </nav>
 
-        <input id="availableOnly" type="checkbox" class="hidden">
+  </div>
+</header>
 
-        <select
-          id="sortSelect"
-          class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-accent-bg font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
-          <option value="title">제목순</option>
-          <option value="new">신간순</option>
-          <option value="popular">인기순</option>
-        </select>
 
-        <!-- 📌 중복 문제를 해결하는 핵심 콤보박스 (기본 내장 필터 기능 정상 유지) -->
-        <select
-          id="categorySelect"
-          class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-accent-bg font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
-          <option value="">전체 카테고리</option>
-        </select>
+<main class="max-w-[1400px] mx-auto px-4 py-8">
 
-      </div>
 
-    </div>
+<div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8">
 
-    <!-- 활성화된 카테고리 알림 뱃지 바 -->
-    <div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 font-suit text-[14px] font-light tracking-[-0.01em]">
-      <span class="text-gray-500">카테고리:</span>
-      <span id="categoryFilterLabel" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-semibold"></span>
-      <button id="clearCategoryBtn" class="text-gray-400 hover:text-red-500 underline">해제</button>
-    </div>
 
-    <!-- 책 결과 리스트 (books.js 렌더링용 타겟) -->
-    <div id="booksList" class="flex flex-col gap-4"></div>
+<div class="relative w-full lg:max-w-2xl">
 
-    <!-- 무한 스크롤 트리거 -->
-    <div id="loadingTrigger" class="h-20 flex items-center justify-center mt-8"></div>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+search
+</span>
 
-  </main>
 
-  <!-- 토스트 컨테이너 -->
-  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+<input
+type="text"
+id="searchInput"
+placeholder="도서명, 저자, 출판사, ISBN"
+class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em]">
 
-  <!-- 📌 전역 카피라이트 라이선스 푸터 안착 -->
-  <footer class="mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
-    <p>
-      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
-    </p>
-  </footer>
+
+</div>
+
+
+
+<div class="flex items-center gap-3 flex-wrap">
+
+
+<button
+id="availableBtn"
+type="button"
+class="h-14 px-6 rounded-2xl bg-white shadow-soft font-suit text-[16px] font-medium tracking-[-0.02em] text-gray-700 transition-all hover:bg-gray-100">
+대여가능도서 보기
+</button>
+
+
+<input
+id="availableOnly"
+type="checkbox"
+class="hidden">
+
+
+
+<select
+ id="sortSelect"
+ class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
+
+    <option value="title">제목순</option>
+    <option value="new">신간순</option>
+    <option value="popular">인기순</option>
+
+</select>
+
+
+
+
+<select
+ id="categorySelect"
+ class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
+
+<option value="">전체 카테고리</option>
+
+</select>
+
+
+</div>
+
+
+</div>
+
+
+<div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 font-suit text-[14px] font-light tracking-[-0.01em]">
+
+<span class="text-gray-500">
+카테고리:
+</span>
+
+<span id="categoryFilterLabel"
+class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-semibold">
+</span>
+
+<button id="clearCategoryBtn" class="text-gray-400 hover:text-red-500 underline">
+해제
+</button>
+
+</div>
+
+
+
+<div id="booksList" class="flex flex-col gap-4">
+</div>
+
+
+<div id="loadingTrigger" class="h-20 flex items-center justify-center mt-8">
+</div>
+
+
+</main>
+
+
+<div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
+</div>
+
 
 </body>
 </html>
