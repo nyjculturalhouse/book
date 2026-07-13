@@ -85,7 +85,9 @@ async function loadHomeData() {
   ${book['저자']}
 </p>
           </div>
-          <span class="text-xs text-gray-400 shrink-0">대여 ${book['대여횟수']}회</span>
+<span class="text-sm font-semibold text-[#E04825] shrink-0">
+  대여 ${book['대여횟수']}회
+</span>
         </a>
       `).join('');
     }
