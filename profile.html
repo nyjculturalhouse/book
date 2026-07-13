@@ -4,63 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>소소책방 | 내정보</title>
+
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { pretendard: ['Pretendard', 'sans-serif'] },
+          fontFamily: {
+            pretendard: ['Pretendard', 'sans-serif']
+          },
           colors: {
-            primary: { DEFAULT: "#111111", hover: "#222222" },
-            accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
+            primary: {
+              DEFAULT: "#111111",
+              hover: "#222222"
+            },
+            accent: {
+              bg: "#FF5A36",
+              text: "#FFFFFF",
+              hover: "#E04825"
+            },
             surface: "#F4F4F3",
             container: "#FFFFFF",
             onSurface: "#111111"
           },
-          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-          borderRadius: { xl: "18px" }
+          boxShadow: {
+            soft: "0 8px 30px rgba(0,0,0,0.03)"
+          },
+          borderRadius: {
+            xl: "18px"
+          }
         }
       }
     }
   </script>
+
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+
   <link rel="stylesheet" href="./css/style.css">
+
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/profile.js" defer></script>
 </head>
+
 <body class="bg-surface text-onSurface font-pretendard">
+
   <!-- Header -->
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="text-xl font-bold tracking-tight">소소책방</a>
+
       <nav class="hidden md:flex items-center gap-6 font-medium text-sm">
         <a href="index.html" class="hover:text-accent-bg transition-colors">홈</a>
         <a href="books.html" class="hover:text-accent-bg transition-colors">도서대여</a>
         <a href="rentals.html" class="hover:text-accent-bg transition-colors">대여현황</a>
         <a href="profile.html" class="text-accent-bg font-bold">내정보</a>
-        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition-colors">로그아웃</button>
+        <button id="logoutBtn" class="text-gray-400 hover:text-red-500 transition-colors">
+          로그아웃
+        </button>
       </nav>
     </div>
   </header>
 
   <main class="max-w-[1400px] mx-auto px-4 py-8">
+
     <h2 class="text-2xl font-bold mb-6">내 정보</h2>
 
-    <div id="profileContainer" class="bg-container rounded-xl shadow-soft p-6 mb-6">
+    <div id="profileContainer" class="bg-container rounded-xl shadow-soft p-6 mb-8">
       <div class="flex justify-center py-8">
-        <span class="material-symbols-outlined animate-spin text-gray-400">progress_activity</span>
+        <span class="material-symbols-outlined animate-spin text-gray-400">
+          progress_activity
+        </span>
       </div>
     </div>
 
+    <!-- 회원탈퇴 버튼 -->
     <div class="flex justify-end">
-      <button id="withdrawBtn" class="text-sm text-gray-400 hover:text-red-500 transition-colors underline">회원탈퇴</button>
+      <button
+  id="withdrawBtn"
+  class="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all duration-200 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95"
+  style="background:#E04825;"
+>
+  <span
+    class="material-symbols-outlined"
+    style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;"
+  >
+    delete
+  </span>
+  회원탈퇴
+</button>
     </div>
+
   </main>
 
-  <div id="toastContainer" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2"></div>
+  <div
+    id="toastContainer"
+    class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
+  </div>
+
 </body>
 </html>
