@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
     }
   }
-     
+      
   loadBooks(true);
 });
 
@@ -189,9 +189,11 @@ function renderCard(book) {
   const safeTitleForJs = UI.escapeJs(book['도서명']);
   const safeIsbnForJs = UI.escapeJs(book['ISBN']);
 
-  // 📌 1. 기존 오렌지/다홍 계열 텍스트 및 아이콘을 차분한 세이지 그린(#4F7C6B)으로 전면 교체
-  // 📌 2. 대여하기 버튼에 'btn-bounce' 클래스를 부여하여 쫀득하게 튕기는 탄성 효과 매핑
-  // 📌 3. 대여 버튼의 주황색 계열 배경색을 세이지 그린 브랜드 컬러(bg-accent / hover 시 Deep Sage)로 변경
+  // 📌 테일윈드 컴파일 누락 이슈 해결을 위해 동적 삼항연산자 문자열을 명시적인 HEX 스펙 클래스로 리팩토링 완료
+  const buttonClass = isAvail 
+    ? 'bg-[#4F7C6B] text-white hover:bg-[#386052]' 
+    : 'bg-gray-200 text-gray-400 cursor-not-allowed';
+
   return `
     <div class="bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-all">
       <div class="flex items-center gap-4">
@@ -235,21 +237,7 @@ function renderCard(book) {
         <!-- 대여 버튼 -->
         <button
           onclick="rentBook('${safeIsbnForJs}','${safeTitleForJs}')"
-          class="
-          btn-bounce
-          px-4
-          py-2
-          rounded-lg
-          text-sm
-          font-semibold
-          whitespace-nowrap
-          transition-all
-          ${
-            isAvail
-            ? 'bg-accent text-accent-text hover:bg-[#386052]'
-            : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-          }
-          "
+          class="btn-bounce px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${buttonClass}"
           ${!isAvail ? 'disabled' : ''}>
             ${isAvail ? '대여하기' : '대여중'}
         </button>
