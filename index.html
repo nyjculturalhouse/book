@@ -116,45 +116,22 @@ textarea {
 
 </head>
 <body class="bg-surface text-onSurface">
-<header class="bg-container shadow-soft sticky top-0 z-50">
-<div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-
-<!-- 로고 -->
-
-<a href="index.html"
-class="font-haeong text-[26px] font-normal tracking-[-0.04em]">
-소소책방
-</a>
-
-<!-- 메뉴 -->
-<nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
-<a href="index.html"
-class="px-4 py-2 rounded-full bg-[#E04825] text-white font-medium">
-홈
-</a>
-
-<a href="books.html"
-class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825]">
-도서대여
-</a>
-
-<a href="rentals.html"
-class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825]">
-대여현황
-</a>
-
-<a href="profile.html"
-class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825]">
-내정보
-</a>
-
-<button id="logoutBtn"
-class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500">
-로그아웃
-</button>
-
-</nav>
-</div>
+<header class="sticky top-0 z-40 w-full bg-container/80 backdrop-blur-md border-b border-gray-100">
+  <div class="flex items-center justify-between max-w-md mx-auto h-14 px-4">
+    <!-- 로고 텍스트 색상을 세이지 그린으로 변경 -->
+    <a href="index.html" class="text-lg font-black tracking-tighter text-[#4F7C6B]">
+      소소책방
+    </a>
+    
+    <div class="flex items-center gap-2">
+      <a href="mypage.html" class="p-2 text-gray-600 hover:text-[#4F7C6B] transition-colors">
+        <span class="material-symbols-outlined">account_circle</span>
+      </a>
+      <button id="logoutBtn" class="btn-bounce text-xs font-bold px-3 py-1.5 rounded-md bg-surface text-gray-500 hover:text-red-500 transition-colors">
+        로그아웃
+      </button>
+    </div>
+  </div>
 </header>
 
 <main class="max-w-[1400px] mx-auto px-4 py-10 flex flex-col gap-16">
@@ -228,4 +205,11 @@ class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2">
 </div>
 
 </body>
+<footer class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
+  <p>
+    본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
+    해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
+    CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+  </p>
+</footer>
 </html>
