@@ -20,7 +20,7 @@ const UI = {
     const iconName = type === 'error' ? 'error' : 'check_circle';
     
     // 📌 에러는 기존 레드를 유지, 성공(success) 시 주황색 대신 새로운 브랜드 컬러인 Sage Green(#4F7C6B) 매핑
-    const iconColor = type === 'error' ? 'text-red-400' : 'text-[#4F7C6B]';
+    const iconColor = type === 'error' ? 'text-red-400' : 'text-accent-bg';
 
     // 📌 SUIT 폰트 세부 규칙 (14px, Medium, 자간 -0.015em) 완벽 반영
     toast.className = `toast ${bg} text-white px-5 py-3 rounded-xl shadow-soft flex items-center gap-2 text-[14px] font-medium tracking-[-0.015em] font-suit`;
@@ -61,7 +61,7 @@ const UI = {
         <div class="text-[14px] font-light text-gray-600 leading-relaxed mb-6 tracking-[-0.015em]">${descriptionHtml}</div>
         <div class="flex gap-2 text-[15px] font-medium tracking-[-0.015em]">
           <button id="ui-modal-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-surface font-medium hover:bg-gray-200 text-primary transition-colors">취소</button>
-          <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent text-accent-text font-medium hover:bg-[#386052] transition-colors">${confirmText}</button>
+          <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent text-accent-text font-medium hover:bg-accent-hover transition-colors">${confirmText}</button>
         </div>
       </div>
     `;
