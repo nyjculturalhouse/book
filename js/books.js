@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 if (availableBtn) {
 
-availableBtn.addEventListener("click", () => {
+  availableBtn.addEventListener("click", () => {
 
       availableOnly.checked = !availableOnly.checked;
 
@@ -53,6 +53,8 @@ availableBtn.addEventListener("click", () => {
       loadBooks(true);
 
   });
+
+}
 
   // URL 쿼리 파라미터 처리
   const urlParams = new URLSearchParams(window.location.search);
@@ -131,15 +133,21 @@ availableBtn.addEventListener("click", () => {
 
   const debouncedSearch = Utils.debounce(() => loadBooks(true), 300);
 
+if (searchInput) {
   searchInput.addEventListener('input', debouncedSearch);
+}
 
+if (availableOnly) {
   availableOnly.addEventListener('change', () => {
     loadBooks(true);
   });
+}
 
+if(sortSelect){
   sortSelect.addEventListener('change', () => {
     loadBooks(true);
   });
+}
 
   // ==========================
   // 카테고리 변경
@@ -153,14 +161,14 @@ availableBtn.addEventListener("click", () => {
 
   // Intersection Observer for Infinite Scroll
   const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      loadBooks(false);
-    }
-  }, {
-    rootMargin: '100px'
-  });
+  if (entries[0].isIntersecting) {
+    loadBooks(false);
+  }
+}, {
+  rootMargin: '100px'
+});
 
-  observer.observe(document.getElementById('loadingTrigger'));
+observer.observe(document.getElementById('loadingTrigger'));
 
 if (categorySelect) {
   const homeData = await fetchAPI('getHome', {});
