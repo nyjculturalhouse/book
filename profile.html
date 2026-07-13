@@ -6,27 +6,7 @@
   <title>소소책방 | 내정보</title>
 
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            suit: ['Suit', 'sans-serif'],
-            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
-          },
-          colors: {
-            primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
-            accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
-            surface: "#F7F6F2",
-            container: "#FFFFFF",
-            borderColor: "#E5E5E0"
-          },
-          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-          borderRadius: { xl: "18px" }
-        }
-      }
-    }
-  </script>
+  <script src="./js/tailwind-config.js"></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
@@ -98,15 +78,18 @@
   <!-- Header -->
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
-      <a href="index.html" class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-[#4F7C6B]">소소책방</a>
+      <a href="index.html" class="flex flex-col leading-none">
+        <span class="text-[8px] font-suit font-medium tracking-[-0.01em] text-gray-400 mb-0.5">남양주시 문화의집</span>
+        <span class="font-haeong text-[26px] font-normal tracking-[-0.04em] text-accent-bg">소소책방</span>
+      </a>
 
       <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
         <a href="index.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">홈</a>
         <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
         <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
         
-        <!-- 📌 활성화 메뉴 테마 컬러 교체 (bg-[#E04825] -> bg-[#4F7C6B]) -->
-        <a href="profile.html" class="px-4 py-2 rounded-full bg-[#4F7C6B] text-white font-medium shadow-sm">내정보</a>
+        <!-- 📌 활성화 메뉴 테마 컬러: 시맨틱 브랜드 컬러 클래스로 통일 -->
+        <a href="profile.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">내정보</a>
         
         <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">로그아웃</button>
       </nav>
