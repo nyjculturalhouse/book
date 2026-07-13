@@ -6,22 +6,25 @@
   <title>소소책방 | 로그인</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { pretendard: ['Pretendard', 'sans-serif'] },
-          colors: {
-            primary: { DEFAULT: "#111111", hover: "#222222" },
-            accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
-            surface: "#F4F4F3",
-            container: "#FFFFFF",
-            onSurface: "#111111"
-          },
-          boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
-          borderRadius: { xl: "18px" }
-        }
-      }
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        suit: ['Suit', 'sans-serif'],
+        haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+      },
+      colors: {
+        primary: { DEFAULT: "#1C1C1E", hover: "#38383A" },
+        accent: { bg: "#4F7C6B", text: "#FFFFFF", hover: "#386052" },
+        surface: "#F7F6F2",
+        container: "#FFFFFF",
+        borderColor: "#E5E5E0"
+      },
+      boxShadow: { soft: "0 8px 30px rgba(0,0,0,0.03)" },
+      borderRadius: { xl: "18px" }
     }
+  }
+}
   </script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
