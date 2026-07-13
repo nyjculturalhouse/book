@@ -170,7 +170,8 @@ html {
 }
 
 @font-face {
-    font-family: 'Hiikr';
-    src: url('...HiKR-ExtraBold.woff2') format('woff2');
-    font-weight: 800;
+    font-family: 'PairToucan';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101653@peartoucan-bold/peartoucan-bold/PearToucan-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
 }
