@@ -34,37 +34,45 @@
 </head>
 <body class="bg-surface text-onSurface font-pretendard">
   <!-- Header (index.html과 동일하게 구성) -->
-<nav class="hidden md:flex items-center gap-1 text-[15px] font-semibold tracking-[-0.01em]">
+<header class="bg-container shadow-soft sticky top-0 z-50">
+  <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
 
-<a href="index.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  홈
-</a>
+    <a href="index.html" class="text-xl font-bold tracking-tight">
+      소소책방
+    </a>
 
-<a href="books.html"
-   class="px-4 py-2 rounded-full bg-[#E04825] text-white font-semibold shadow-sm transition-all">
-  도서대여
-</a>
+    <nav class="hidden md:flex items-center gap-1 text-[15px] font-semibold tracking-[-0.01em]">
 
-<a href="rentals.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  대여현황
-</a>
+      <a href="index.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        홈
+      </a>
 
-<a href="profile.html"
-   class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
-  내정보
-</a>
+      <a href="books.html"
+         class="px-4 py-2 rounded-full bg-[#E04825] text-white font-semibold shadow-sm">
+        도서대여
+      </a>
 
-<button
-  id="logoutBtn"
-  class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
-  로그아웃
-</button>
+      <a href="rentals.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        대여현황
+      </a>
 
-</nav>
-    </div>
-  </header>
+      <a href="profile.html"
+         class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-[#E04825] transition-all duration-200">
+        내정보
+      </a>
+
+      <button
+        id="logoutBtn"
+        class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
+        로그아웃
+      </button>
+
+    </nav>
+
+  </div>
+</header>
 
   <main class="max-w-[1400px] mx-auto px-4 py-8">
     <div class="flex flex-col md:flex-row gap-4 mb-6 justify-between items-center">
