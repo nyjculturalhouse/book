@@ -5,11 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>소소책방 | 도서검색</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script>
+  <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { pretendard: ['Pretendard', 'sans-serif'] },
+          fontFamily: { 
+            suit: ['Suit', 'sans-serif'],
+            haeong: ['KookminUniversityHaeongSans', 'sans-serif']
+          },
           colors: {
             primary: { DEFAULT: "#111111", hover: "#222222" },
             accent: { bg: "#FF5A36", text: "#FFFFFF", hover: "#E04825" },
@@ -25,8 +28,62 @@
   </script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
   <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    /* ===========================
+       SUIT Font Face
+    =========================== */
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    /* ===========================
+       KookminUniversityHaeongSans Font Face
+    =========================== */
+    @font-face {
+      font-family: 'KookminUniversityHaeongSans';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Suit', sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+    input, button, select, textarea {
+      font-family: 'Suit', sans-serif;
+    }
+    .font-haeong {
+      font-family: 'KookminUniversityHaeongSans', sans-serif;
+    }
+    .font-suit {
+      font-family: 'Suit', sans-serif;
+    }
+  </style>
 
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
@@ -35,16 +92,16 @@
   <script src="./js/books.js" defer></script>
 </head>
 
-<body class="bg-surface text-onSurface font-pretendard">
+<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
 <header class="bg-container shadow-soft sticky top-0 z-50">
   <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
 
-    <a href="index.html" class="text-xl font-bold tracking-tight">
+    <a href="index.html" class="font-haeong text-[26px] font-normal tracking-[-0.04em]">
       소소책방
     </a>
 
-    <nav class="hidden md:flex items-center gap-1 text-[15px] font-semibold tracking-[-0.01em]">
+    <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
 
       <a href="index.html"
          class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
@@ -52,7 +109,7 @@
       </a>
 
       <a href="books.html"
-         class="px-4 py-2 rounded-full bg-[#E04825] text-white font-semibold shadow-sm">
+         class="px-4 py-2 rounded-full bg-[#E04825] text-white font-medium shadow-sm">
         도서대여
       </a>
 
@@ -95,7 +152,7 @@ search
 type="text"
 id="searchInput"
 placeholder="도서명, 저자, 출판사, ISBN"
-class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-gray-300 text-base">
+class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em]">
 
 
 </div>
@@ -108,7 +165,7 @@ class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outl
 <button
 id="availableBtn"
 type="button"
-class="h-14 px-6 rounded-2xl bg-white shadow-soft font-semibold text-gray-700 transition-all hover:bg-gray-100">
+class="h-14 px-6 rounded-2xl bg-white shadow-soft font-suit text-[16px] font-medium tracking-[-0.02em] text-gray-700 transition-all hover:bg-gray-100">
 대여가능도서 보기
 </button>
 
@@ -122,7 +179,7 @@ class="hidden">
 
 <select
  id="sortSelect"
- class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 text-gray-700">
+ class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
 
     <option value="title">제목순</option>
     <option value="new">신간순</option>
@@ -135,7 +192,7 @@ class="hidden">
 
 <select
  id="categorySelect"
- class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 text-gray-700">
+ class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
 
 <option value="">전체 카테고리</option>
 
@@ -148,14 +205,14 @@ class="hidden">
 </div>
 
 
-<div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 text-sm">
+<div id="categoryFilterBar" class="hidden mb-6 flex items-center gap-2 font-suit text-[14px] font-light tracking-[-0.01em]">
 
 <span class="text-gray-500">
 카테고리:
 </span>
 
 <span id="categoryFilterLabel"
-class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-bold">
+class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full font-semibold">
 </span>
 
 <button id="clearCategoryBtn" class="text-gray-400 hover:text-red-500 underline">
