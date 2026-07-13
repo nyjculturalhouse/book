@@ -125,3 +125,38 @@ select:focus-visible {
   outline: 2px solid #ff5a36;
   outline-offset: 2px;
 }
+
+/* ========================================
+   Scrollbar
+======================================== */
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d7d7d7;
+    border-radius: 999px;
+    transition: background .25s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #FF5A36;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #d7d7d7 transparent;
+}
+
+/* 부드러운 스크롤 */
+html {
+    scroll-behavior: smooth;
+}
