@@ -101,7 +101,7 @@ async function loadHomeData() {
     } else {
       popularBooksList.innerHTML = data.popularBooks.map((book, idx) => `
         <a href="books.html?q=${encodeURIComponent(book['도서명'])}" class="flex items-center gap-4 bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-shadow slide-up">
-          <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-[#4F7C6B]' : 'text-gray-300'}">${idx + 1}</span>
+          <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-accent-bg' : 'text-gray-300'}">${idx + 1}</span>
           <img src="${book['표지URL']}" loading="lazy" class="w-10 h-14 object-cover rounded bg-surface shrink-0">
           <div class="flex-1 min-w-0">
             <h4 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
@@ -111,7 +111,7 @@ async function loadHomeData() {
               ${book['저자']}
             </p>
           </div>
-          <span class="text-sm font-semibold text-[#4F7C6B] shrink-0">
+          <span class="text-sm font-semibold text-accent-bg shrink-0">
             대여 ${book['대여횟수']}회
           </span>
         </a>
@@ -122,7 +122,7 @@ async function loadHomeData() {
     if (categoryList && data.categories && data.categories.length > 0) {
       categoryList.innerHTML = data.categories.map((cat) => `
         <a href="books.html?category=${encodeURIComponent(cat)}"
-           class="btn-bounce shrink-0 px-5 py-2.5 rounded-full bg-container shadow-soft text-sm font-bold hover:bg-[#4F7C6B] hover:text-white transition-colors">
+           class="btn-bounce shrink-0 px-5 py-2.5 rounded-full bg-container shadow-soft text-sm font-bold hover:bg-accent-bg hover:text-white transition-colors">
           ${cat}
         </a>
       `).join('');
@@ -172,7 +172,7 @@ function renderBookCard(book) {
             transition-all
             ${
               isAvail
-                ? 'bg-[#4F7C6B] !text-white !opacity-100 visible hover:bg-[#386052]'
+                ? 'bg-accent-bg !text-white !opacity-100 visible hover:bg-accent-hover'
                 : 'bg-gray-200 text-gray-400 pointer-events-none'
             }
           ">
