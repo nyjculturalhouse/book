@@ -1,9 +1,8 @@
 /* =========================================================
    소소책방 공통 앱 스크립트
-   - 로그인 가드 (비로그인 시 로그인 페이지로 이동)
-   - 로그아웃 처리
-   - 홈 화면(index.html) 데이터 렌더링
-   모든 페이지에서 가장 먼저 로드된다.
+   - 로그인 가드 & 로그아웃 처리
+   - 홈 화면(index.html) 데이터 렌더링 및 UI 테마 보정
+   - 전역 라이선스 푸터 자동 삽입 로직 포함
 ========================================================= */
 
 (function authGuard() {
@@ -19,20 +18,22 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 📌 [공통] 전역 푸터 자동 삽입 (기존 레이아웃 흐름을 해치지 않도록 body 최하단에 배치)
+  injectLicenseFooter();
+
   // ---------- 로그아웃 ----------
   const logoutBtn = document.getElementById('logoutBtn');
   if (logoutBtn) {
-    logoutBtn.classList.add('btn-bounce'); // 로그아웃 버튼 튕김 효과 추가
+    logoutBtn.classList.add('btn-bounce');
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('sosoUser');
       location.href = 'login.html';
     });
   }
 
-  // ---------- 홈 상단 검색창 (index.html) ----------
+  // ---------- 홈 상단 검색창 ----------
   const homeSearchForm = document.getElementById('homeSearchForm');
   if (homeSearchForm) {
-    // 돋보기 버튼 혹은 검색 창 내부의 버튼 요소에 btn-bounce 적용
     const searchSubmitBtn = homeSearchForm.querySelector('button');
     if (searchSubmitBtn) searchSubmitBtn.classList.add('btn-bounce');
 
@@ -43,12 +44,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- 홈 데이터 렌더링 (index.html에서만 실행) ----------
+  // ---------- 홈 데이터 렌더링 ----------
   const newBooksList = document.getElementById('newBooksList');
   if (!newBooksList) return;
 
   loadHomeData();
 });
+
+/**
+ * 📌 동적 푸터 삽입 함수
+ * HTML마다 일일이 푸터 코드를 복사 붙여넣기 하지 않아도 app.js가 로드되는 모든 페이지 하단에 자동으로 배치됩니다.
+ */
+function injectLicenseFooter() {
+  if (document.getElementById('soso-license-footer')) return; // 중복 삽입 방지
+
+  const footer = document.createElement('footer');
+  footer.id = 'soso-license-footer';
+  // 가독성을 확보하고 스크롤 끝에 자연스럽게 안착하도록 세팅
+  footer.className = 'mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed';
+  footer.innerHTML = `
+    <p>
+      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
+      해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
+      CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+    </p>
+  `;
+  document.body.appendChild(footer);
+}
 
 async function loadHomeData() {
   const newBooksList = document.getElementById('newBooksList');
@@ -77,10 +99,9 @@ async function loadHomeData() {
     if (!data.popularBooks || data.popularBooks.length === 0) {
       popularBooksList.innerHTML = '<div class="text-center text-gray-400 py-8">대여 데이터가 아직 없습니다.</div>';
     } else {
-      // 📌 대여 횟수 뱃지 텍스트 컬러를 차분한 세이지 그린(#4F7C6B)으로 교체
       popularBooksList.innerHTML = data.popularBooks.map((book, idx) => `
         <a href="books.html?q=${encodeURIComponent(book['도서명'])}" class="flex items-center gap-4 bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-shadow slide-up">
-          <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-accent-bg' : 'text-gray-300'}">${idx + 1}</span>
+          <span class="text-xl font-bold w-6 text-center ${idx < 3 ? 'text-[#4F7C6B]' : 'text-gray-300'}">${idx + 1}</span>
           <img src="${book['표지URL']}" loading="lazy" class="w-10 h-14 object-cover rounded bg-surface shrink-0">
           <div class="flex-1 min-w-0">
             <h4 class="text-base font-bold tracking-[-0.03em] leading-tight truncate">
@@ -98,7 +119,6 @@ async function loadHomeData() {
     }
 
     // 카테고리 바로가기
-    // 📌 카테고리 태그 칩에 'btn-bounce' 클래스 추가하여 쫀득한 튕김 인터랙션 매핑
     if (categoryList && data.categories && data.categories.length > 0) {
       categoryList.innerHTML = data.categories.map((cat) => `
         <a href="books.html?category=${encodeURIComponent(cat)}"
@@ -118,8 +138,8 @@ async function loadHomeData() {
 function renderBookCard(book) {
   const isAvail = book['상태'] === '대여가능';
 
-  // 📌 1. 기존 오렌지/다홍 계열 배경색을 세이지 그린 브랜드 컬러(bg-accent / hover 시 Deep Sage)로 교체
-  // 📌 2. 바로가기 링크 버튼에 'btn-bounce' 클래스를 부여하여 일관된 탄성 피드백 제공
+  // 📌 대여 바로가기/대여하기 버튼에 !important 레벨의 강제 스타일 주입 (!text-white, !opacity-100)
+  // 📌 기존 CSS 튕김 효과(btn-bounce)가 활성화되어도 글자가 상시 투명해지지 않고 완벽하게 보장됩니다.
   return `
     <div class="bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-shadow slide-up">
       <div class="flex items-center gap-4">
@@ -147,10 +167,12 @@ function renderBookCard(book) {
             rounded-lg
             text-sm
             font-semibold
-            transition-colors
+            text-center
+            inline-block
+            transition-all
             ${
               isAvail
-                ? 'bg-accent text-accent-text hover:bg-[#386052]'
+                ? 'bg-[#4F7C6B] !text-white !opacity-100 visible hover:bg-[#386052]'
                 : 'bg-gray-200 text-gray-400 pointer-events-none'
             }
           ">
