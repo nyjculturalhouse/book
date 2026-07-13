@@ -90,19 +90,6 @@ button:active {
   animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* ---------- 스크롤바 ---------- */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background: #d9d9d7;
-  border-radius: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 /* ---------- line-clamp fallback (구형 브라우저 대비) ---------- */
 .line-clamp-1 {
   display: -webkit-box;
@@ -117,12 +104,12 @@ button:active {
   overflow: hidden;
 }
 
-/* ---------- 포커스 접근성 ---------- */
+/* ---------- 포커스 접근성 (새로운 브랜드 액센트 컬러 매핑) ---------- */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid #ff5a36;
+  outline: 2px solid #4F7C6B; /* Accent: Sage Green */
   outline-offset: 2px;
 }
 
@@ -147,7 +134,7 @@ select:focus-visible {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #FF5A36;
+    background: #4F7C6B; /* Accent: Sage Green */
 }
 
 /* Firefox */
@@ -158,25 +145,34 @@ select:focus-visible {
 
 /* 부드러운 스크롤 */
 html {
-    scroll-behavior: smooth;
+    scrollbar-behavior: smooth;
 }
 
-/* ---------- 폰트 ---------- */
-
+/* ---------- 폰트 선언 ---------- */
 @font-face {
     font-family: 'Suit';
-    src: url('...SUIT-Regular.woff2') format('woff2');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
     font-weight: 400;
+    font-display: swap;
 }
 
 @font-face {
-
     font-family: 'KookminUniversityHaeongSans';
-
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101519@kmu80haeongsans/kmu80haeongsans/KMU80HaeongSans.woff2') format('woff2');
-
     font-weight: 400;
-
     font-display: swap;
+}
 
+/* =========================================================
+   새로운 브랜드 디자인 컬러 시스템 정의 (테마 호환용)
+========================================================= */
+:root {
+  --color-primary: #1C1C1E;       /* Black (제목, 기본 텍스트) */
+  --color-primary-hover: #38383A; /* Charcoal (Hover 상태) */
+  --color-accent: #4F7C6B;        /* Sage Green (강조, 주버튼) */
+  --color-accent-hover: #386052;  /* Deep Sage (활성/클릭 상태) */
+  --color-accent-text: #FFFFFF;   /* White (버튼 텍스트) */
+  --color-surface: #F7F6F2;      /* Paper Gray (전체 배경) */
+  --color-container: #FFFFFF;    /* White (카드 배경) */
+  --color-border: #E5E5E0;       /* Soft Gray (구분선) */
 }
