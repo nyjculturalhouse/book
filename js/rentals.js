@@ -76,6 +76,7 @@ function renderCurrentItem(item) {
   const safeIsbnForJs = UI.escapeJs(item['ISBN']);
   const safeTitleForJs = UI.escapeJs(item['제목']);
 
+  // 📌 반납하기 버튼의 class에 'btn-bounce'를 추가하여 쫀득한 튕김 인터랙션 매핑
   return `
     <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
       <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm">
@@ -87,14 +88,14 @@ function renderCurrentItem(item) {
         <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">대여일: ${Utils.formatDate(item['대여일'])}</p>
         <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">반납예정일: ${Utils.formatDate(item['반납예정일'])}</p>
       </div>
-      <button onclick="returnBook('${safeIsbnForJs}', '${safeTitleForJs}')" class="px-4 py-2 bg-primary text-white rounded-lg font-suit text-[15px] font-normal tracking-[-0.015em] hover:bg-primary-hover transition-colors shrink-0">
+      <button onclick="returnBook('${safeIsbnForJs}', '${safeTitleForJs}')" class="btn-bounce px-4 py-2 bg-primary text-white rounded-lg font-suit text-[15px] font-normal tracking-[-0.015em] hover:bg-primary-hover transition-colors shrink-0">
         반납하기
       </button>
     </div>
   `;
 }
 
-// 📌 표지 이미지 추가 및 우측 상태 배너를 반납하기 버튼 크기와 똑같이 정비
+// 대여 이력 렌더링 (단순 상태 표시 영역이므로 별도의 버튼 인터랙션 클래스는 불필요하여 디자인 유지)
 function renderHistoryItem(item) {
   const isOverdue = item['연체일수'] > 0;
   return `
