@@ -68,9 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 📌 취소/탈퇴 버튼들에 'btn-bounce'를 매핑하여 쫀득하게 튕기는 탄성 효과 부여
     const modalHtml = `
       <div id="pw-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 fade-in px-4 font-suit">
-        <div class="bg-container w-full max-w-[320px] rounded-xl shadow-soft p-6 slide-up">
-          <h3 class="text-[18px] font-semibold mb-2 text-red-500 tracking-[-0.02em]">회원탈퇴</h3>
-          <p class="text-[14px] font-light text-gray-600 mb-4 tracking-[-0.01em]">탈퇴를 위해 비밀번호를 입력해주세요.</p>
+        <div class="bg-container w-full max-w-[320px] rounded-xl shadow-soft p-6 slide-up text-center">
+          <h3 class="text-[18px] font-semibold mb-2 text-red-500 tracking-[-0.02em] text-center">회원탈퇴</h3>
+          <p class="text-[14px] font-light text-gray-600 mb-4 tracking-[-0.01em] text-center">탈퇴를 위해 비밀번호를 입력해주세요.</p>
 
           <input
             type="password"
