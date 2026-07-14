@@ -162,7 +162,7 @@ window.returnBook = (isbn, title) => {
       await fetchAPI('returnBook', { userId: user.id, isbn }, 'POST');
       invalidateFetchCache();
       UI.showToast('반납되었습니다.');
-      setTimeout(() => window.location.reload(), 1000);
+      setTimeout(() => window.location.reload(), 1500); // 1.5초~2초로 리프레시 타이밍 확보
     } catch (err) {
       UI.showToast(err.message, 'error');
       throw err;
