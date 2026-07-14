@@ -1,48 +1,173 @@
-<!-- 도서 위치 확인 모달/섹션 컨테이너 -->
-<div class="p-6 bg-[#F7F6F2] rounded-2xl max-w-4xl mx-auto font-suit slide-up" style="font-family: 'Suit', sans-serif;">
-  <div class="mb-5 text-center">
-    <h2 class="text-xl font-bold text-[#1C1C1E] tracking-tight">도서 위치 찾기</h2>
-    <p class="text-sm text-gray-500 mt-1">
-      찾으시는 도서의 위치가 <span id="target-location-text" class="font-semibold text-[var(--color-accent)] text-base">A-04</span>에 하이라이트 표시됩니다.
-    </p>
-  </div>
-
-  <!-- 전체 책장 맵 레이아웃 (좌/우 외부 안내 표지판 포함) -->
-  <div class="flex items-center justify-center gap-4 bg-white p-6 rounded-xl border border-[var(--color-border)] shadow-soft overflow-x-auto">
-    
-    <!-- 좌측 외부 라벨 (차~Z) -->
-    <div class="flex flex-col items-center justify-center border-r border-[var(--color-border)] pr-4 text-gray-400 font-medium shrink-0">
-      <span class="text-xs uppercase tracking-wider">차 ~ Z</span>
-      <div class="w-6 h-[1px] bg-gray-300 my-1"></div>
-    </div>
-
-    <!-- 메인 책장 매트릭스 GRID (7개 열 배치) -->
-    <!-- 스케치 구조에 맞춰 컬럼 너비 비율 조정 및 CSS 변수 테두리 적용 -->
-    <div id="bookshelf-matrix" class="grid grid-cols-[1.2fr_1fr_1.2fr_1fr_1.2fr_0.8fr_1.2fr] gap-1.5 w-[600px] shrink-0 p-1 bg-white rounded-lg">
-      <!-- JavaScript를 통해 7개 열 * 8개 행 셀들이 동적으로 생성됩니다. -->
-    </div>
-
-    <!-- 우측 외부 라벨 (우~이, 자~쪼) -->
-    <div class="flex flex-col items-center justify-center border-l border-[var(--color-border)] pl-4 text-gray-400 font-medium shrink-0 gap-3">
-      <div class="text-center">
-        <span class="text-xs block">우 ~ 이</span>
-        <div class="w-6 h-[1px] bg-gray-300 my-1 mx-auto"></div>
-      </div>
-      <div class="text-center">
-        <span class="text-xs block">자 ~ 쪼</span>
-        <div class="w-6 h-[1px] bg-gray-300 my-1 mx-auto"></div>
-      </div>
-    </div>
-
-  </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소소책방 | 도서 위치 찾기</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="./js/tailwind-config.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="./css/style.css">
   
-  <!-- 하단 서랍 가이드 범례 -->
-  <div class="mt-5 flex justify-center gap-6 text-[13px] text-gray-500">
-    <div class="flex items-center gap-1.5">
-      <span class="w-3 h-3 rounded block" style="background-color: var(--color-accent);"></span> 선택된 도서 위치
+  <style>
+    /* ===========================
+        SUIT Font Face
+    =========================== */
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Suit';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+
+    /* ===========================
+        KookminUniversityHaeongSans Font Face
+    =========================== */
+    @font-face {
+      font-family: 'KookminUniversityHaeongSans';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    body {
+      font-family: 'Suit', sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.015em;
+    }
+    input, button, select, textarea {
+      font-family: 'Suit', sans-serif;
+    }
+    .font-haeong {
+      font-family: 'KookminUniversityHaeongSans', sans-serif;
+    }
+    .font-suit {
+      font-family: 'Suit', sans-serif;
+    }
+  </style>
+
+  <script src="./js/api.js" defer></script>
+  <script src="./js/ui.js" defer></script>
+  <script src="./js/utils.js" defer></script>
+  <script src="./js/app.js" defer></script>
+  <!-- 책장 데이터 및 하이라이트 제어 스크립트 연결 -->
+  <script src="./js/location.js" defer></script>
+</head>
+<body class="bg-surface flex flex-col min-h-screen text-onSurface">
+
+  <!-- ==========================================
+       공통 헤더 영역 (Header)
+       ========================================== -->
+  <header class="bg-white border-b border-[var(--color-border)] sticky top-0 z-50 shadow-sm">
+    <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
+
+      <!-- 로고 (성곡해옹 폰트 + 브랜드 액센트 컬러 매핑) -->
+      <a href="index.html" class="flex flex-col leading-none">
+        <span class="text-[8px] font-suit font-medium tracking-[-0.04em] text-gray-400 mb-0.5">남양주시 문화의집</span>
+        <span class="font-haeong text-[26px] font-normal tracking-[-0.04em]" style="color: var(--color-accent);">소소책방</span>
+      </a>
+
+      <!-- 상단 내비게이션 메뉴 (btn-bounce 마이크로 인터랙션 추가) -->
+      <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
+        <a href="index.html" class="btn-bounce px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          홈
+        </a>
+        <a href="books.html" class="btn-bounce px-4 py-2 rounded-full text-white font-medium shadow-sm" style="background-color: var(--color-accent);">
+          도서대여
+        </a>
+        <a href="rentals.html" class="btn-bounce px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          대여현황
+        </a>
+        <a href="profile.html" class="btn-bounce px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">
+          내정보
+        </a>
+        <button id="logoutBtn" class="btn-bounce px-4 py-2 rounded-full text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all duration-200">
+          로그아웃
+        </button>
+      </nav>
+
     </div>
-    <div class="flex items-center gap-1.5">
-      <span class="w-3 h-3 rounded bg-white border border-[var(--color-border)] block"></span> 일반 서가
+  </header>
+
+  <!-- 메인 레이아웃 본문 (수정/삭제 절대 없음) -->
+  <main class="flex-grow flex items-center justify-center p-6 w-full">
+
+    <!-- 도서 위치 확인 모달/섹션 컨테이너 -->
+    <div class="p-6 bg-[#F7F6F2] rounded-2xl max-w-4xl mx-auto font-suit slide-up" style="font-family: 'Suit', sans-serif;">
+      <div class="mb-5 text-center">
+        <h2 class="text-xl font-bold text-[#1C1C1E] tracking-tight">도서 위치 찾기</h2>
+        <p class="text-sm text-gray-500 mt-1">
+          찾으시는 도서의 위치가 <span id="target-location-text" class="font-semibold text-[var(--color-accent)] text-base">A-04</span>에 하이라이트 표시됩니다.
+        </p>
+      </div>
+
+      <!-- 전체 책장 맵 레이아웃 (좌/우 외부 안내 표지판 포함) -->
+      <div class="flex items-center justify-center gap-4 bg-white p-6 rounded-xl border border-[var(--color-border)] shadow-soft overflow-x-auto">
+        
+        <!-- 좌측 외부 라벨 (차~Z) -->
+        <div class="flex flex-col items-center justify-center border-r border-[var(--color-border)] pr-4 text-gray-400 font-medium shrink-0">
+          <span class="text-xs uppercase tracking-wider">차 ~ Z</span>
+          <div class="w-6 h-[1px] bg-gray-300 my-1"></div>
+        </div>
+
+        <!-- 메인 책장 매트릭스 GRID (7개 열 배치) -->
+        <!-- 스케치 구조에 맞춰 컬럼 너비 비율 조정 및 CSS 변수 테두리 적용 -->
+        <div id="bookshelf-matrix" class="grid grid-cols-[1.2fr_1fr_1.2fr_1fr_1.2fr_0.8fr_1.2fr] gap-1.5 w-[600px] shrink-0 p-1 bg-white rounded-lg">
+          <!-- JavaScript를 통해 7개 열 * 8개 행 셀들이 동적으로 생성됩니다. -->
+        </div>
+
+        <!-- 우측 외부 라벨 (우~이, 자~쪼) -->
+        <div class="flex flex-col items-center justify-center border-l border-[var(--color-border)] pl-4 text-gray-400 font-medium shrink-0 gap-3">
+          <div class="text-center">
+            <span class="text-xs block">우 ~ 이</span>
+            <div class="w-6 h-[1px] bg-gray-300 my-1 mx-auto"></div>
+          </div>
+          <div class="text-center">
+            <span class="text-xs block">자 ~ 쪼</span>
+            <div class="w-6 h-[1px] bg-gray-300 my-1 mx-auto"></div>
+          </div>
+        </div>
+
+      </div>
+      
+      <!-- 하단 서랍 가이드 범례 -->
+      <div class="mt-5 flex justify-center gap-6 text-[13px] text-gray-500">
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded block" style="background-color: var(--color-accent);"></span> 선택된 도서 위치
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="w-3 h-3 rounded bg-white border border-[var(--color-border)] block"></span> 일반 서가
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+
+  </main>
+
+  <!-- 📌 라이선스 푸터: id="soso-license-footer"를 명시해 app.js의 자동 삽입과 중복되지 않도록 처리 -->
+  <footer id="soso-license-footer" class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
+    <p>
+      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
+      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+    </p>
+  </footer>
+
+</body>
+</html>
