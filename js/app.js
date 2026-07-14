@@ -58,10 +58,22 @@ document.addEventListener('DOMContentLoaded', () => {
 function injectLicenseFooter() {
   if (document.getElementById('soso-license-footer')) return; // 중복 삽입 방지
 
+  const isLoginPage = location.pathname.endsWith('login.html');
+
   const footer = document.createElement('footer');
   footer.id = 'soso-license-footer';
-  // 가독성을 확보하고 스크롤 끝에 자연스럽게 안착하도록 세팅
-  footer.className = 'mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed';
+
+  if (isLoginPage) {
+    // 📌 로그인 페이지는 body 자체가 `flex items-center justify-center`로 카드 1개만
+    // 정중앙에 배치하는 특수 레이아웃이다. footer를 일반 흐름(형제 flex item)으로 넣으면
+    // 카드가 왼쪽으로 밀리고 footer가 따로 떠버리는 정렬 붕괴가 발생하므로,
+    // position:fixed로 흐름에서 완전히 빼내어 화면 하단 중앙에 고정한다.
+    footer.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-md px-4 text-center text-[11px] sm:text-[12px] font-light tracking-[-0.01em] text-gray-400/80 leading-relaxed';
+  } else {
+    // 가독성을 확보하고 스크롤 끝에 자연스럽게 안착하도록 세팅
+    footer.className = 'mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed';
+  }
+
   footer.innerHTML = `
     <p>
       본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
