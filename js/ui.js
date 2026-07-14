@@ -55,16 +55,19 @@ const UI = {
     // 📌 모달 제목(18px Semibold), 본문(14px Light) 스타일 조정
     // 📌 모달 버튼들에 CSS로 추가하신 1번 효과인 쫀득한 팅김 효과 클래스('btn-bounce')를 정밀하게 매핑
     // 📌 확인 버튼에 새로운 세이지 그린 컬러 시스템 적용 (bg-accent / hover 시 Deep Sage로 전환)
-    root.innerHTML = `
-      <div class="bg-container w-full max-w-[340px] rounded-xl shadow-soft p-6 modal-box text-primary">
-        <h3 class="text-[18px] font-semibold mb-2 tracking-[-0.025em]">${title}</h3>
-        <div class="text-[14px] font-light text-gray-600 leading-relaxed mb-6 tracking-[-0.015em]">${descriptionHtml}</div>
-        <div class="flex gap-2 text-[15px] font-medium tracking-[-0.015em]">
-          <button id="ui-modal-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-surface font-medium hover:bg-gray-200 text-primary transition-colors">취소</button>
-          <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent text-accent-text font-medium hover:bg-accent-hover transition-colors">${confirmText}</button>
-        </div>
-      </div>
-    `;
+// ui.js 파일 내 showModal 함수 안의 HTML 템플릿 부분 수정
+root.innerHTML = `
+  <div class="bg-container w-full max-w-[340px] rounded-xl shadow-soft p-6 modal-box text-primary">
+    <h3 class="text-[18px] font-semibold mb-2 tracking-[-0.025em]">${title}</h3>
+    <div class="text-[14px] font-light text-gray-600 leading-relaxed mb-6 tracking-[-0.015em]">${descriptionHtml}</div>
+    <div class="flex gap-2 text-[15px] font-medium tracking-[-0.015em]">
+      <button id="ui-modal-cancel" class="btn-bounce flex-1 py-2.5 rounded-lg bg-surface font-medium hover:bg-gray-200 text-primary transition-colors">취소</button>
+      
+      <!-- 🌟 수정: bg-accent를 -> bg-accent-bg 로 수정하여 색상 컴파일 및 비동기 동작을 안정화 -->
+      <button id="ui-modal-confirm" class="btn-bounce flex-1 py-2.5 rounded-lg bg-accent-bg text-white font-medium hover:bg-accent-hover transition-colors">${confirmText}</button>
+    </div>
+  </div>
+`;
 
     document.body.appendChild(root);
 
