@@ -3,6 +3,31 @@
    Tailwind로 표현하기 어려운 애니메이션 / 토스트 / 모달 / 스켈레톤만 정의
 ========================================================= */
 
+/* =========================================================================
+   Material Symbols 아이콘 필수 클래스
+   -------------------------------------------------------------------------
+   구글 Material Symbols는 <link>로 폰트 파일(@font-face)만 불러올 뿐,
+   .material-symbols-outlined 클래스 자체는 직접 정의해줘야 아이콘으로 렌더링된다.
+   이 클래스가 없으면 "progress_activity", "search", "book" 같은 아이콘 이름이
+   아이콘으로 그려지지 않고 글자 그대로 노출된다.
+========================================================================= */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }
