@@ -62,37 +62,34 @@ function renderCurrentItem(item) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   
-  const dueDate = new Date(item['반납예정일']);
+  // 띄어쓰기 유연성 확보
+  const rawDueDate = item['반납예정일'] !== undefined ? item['반납예정일'] : item['반납 예정일'];
+  const dueDate = new Date(rawDueDate);
   dueDate.setHours(0, 0, 0, 0);
   
   const diffTime = dueDate.getTime() - today.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  // 📌 D-Day 구간별 명시적 스타일 매핑 (테일윈드 JIT 컴파일 대응 및 UI 고급화)
   let statusBadge = '';
   if (diffDays < 0) {
-    // 1. 반납기한이 지난 경우 (연체)
     statusBadge = `
       <span class="px-2 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em]">
         연체 ${Math.abs(diffDays)}일째
       </span>
     `;
   } else if (diffDays === 0) {
-    // 2. 반납 당일인 경우 (맥박 애니메이션 효과 추가)
     statusBadge = `
       <span class="px-2 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded text-[13px] font-suit font-semibold tracking-[-0.01em] animate-pulse">
         오늘 반납 마감
       </span>
     `;
   } else if (diffDays <= 3) {
-    // 3. 반납 마감 임박 (3일 이하)
     statusBadge = `
       <span class="px-2 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
         D-${diffDays} (연체주의)
       </span>
     `;
   } else {
-    // 4. 반납 기한이 넉넉한 경우 (소소책방 시그니처 세이지 그린 테마 매핑)
     statusBadge = `
       <span class="px-2 py-1 bg-accent-bg/10 text-accent-bg rounded text-[13px] font-suit font-medium tracking-[-0.01em]">
         D-${diffDays}
@@ -117,7 +114,7 @@ function renderCurrentItem(item) {
           대여일: ${Utils.formatDate(item['대여일'])}
         </p>
         <p class="font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
-          반납예정일: <span class="font-medium">${Utils.formatDate(item['반납예정일'])}</span>
+          반납예정일: <span class="font-medium">${Utils.formatDate(rawDueDate)}</span>
         </p>
       </div>
       <button 
@@ -129,9 +126,13 @@ function renderCurrentItem(item) {
   `;
 }
 
-// 대여 이력 렌더링
 function renderHistoryItem(item) {
-  const isOverdue = item['연체일수'] > 0;
+  // 시트의 '연체일수' 또는 '연체 일수' 둘 다 안전하게 가져오도록 Fallback 설정
+  const overdueDays = item['연체일수'] !== undefined ? item['연체일수'] : item['연체 일수'];
+  const isOverdue = Number(overdueDays || 0) > 0;
+  
+  const rawReturnDate = item['반납일'] !== undefined ? item['반납일'] : item['반납 일'];
+
   return `
     <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
       <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
@@ -141,12 +142,12 @@ function renderHistoryItem(item) {
         </h3>
         <div class="flex flex-col gap-0.5 font-suit text-[14px] font-light tracking-[-0.01em] text-gray-500">
           <span>대여: ${Utils.formatDate(item['대여일'])}</span>
-          <span>반납: ${Utils.formatDate(item['반납일'])}</span>
+          <span>반납: ${Utils.formatDate(rawReturnDate)}</span>
         </div>
       </div>
       <div class="shrink-0">
         ${isOverdue
-          ? `<span class="inline-block px-4 py-2 bg-red-50 text-red-500 border border-red-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">연체 ${item['연체일수']}일</span>`
+          ? `<span class="inline-block px-4 py-2 bg-red-50 text-red-500 border border-red-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">연체 ${overdueDays}일</span>`
           : `<span class="inline-block px-4 py-2 bg-green-50 text-green-600 border border-green-100 rounded-lg font-suit text-[15px] font-semibold tracking-[-0.015em] text-center min-w-[80px]">정상반납</span>`}
       </div>
     </div>
@@ -156,7 +157,6 @@ function renderHistoryItem(item) {
 window.returnBook = (isbn, title) => {
   const user = JSON.parse(localStorage.getItem('sosoUser'));
   
-  // 반납 모달 안내창에도 브랜드 세이지 그린 포인트 컬러 적용 적용
   UI.showModal('반납하시겠습니까?', `<b class="text-accent-bg">${UI.escapeHtml(title)}</b>`, '반납', async () => {
     try {
       await fetchAPI('returnBook', { userId: user.id, isbn }, 'POST');
