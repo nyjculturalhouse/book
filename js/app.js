@@ -125,8 +125,7 @@ function injectLicenseFooter() {
   footer.innerHTML = `
     <p>
       본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며,<br>
-      CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
     </p>
   `;
   document.body.appendChild(footer);
