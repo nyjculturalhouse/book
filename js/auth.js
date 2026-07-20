@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await fetchAPI('login', { id, password: pw }, 'POST');
       if (!data) return; // 취소된 요청
       localStorage.setItem('sosoUser', JSON.stringify(data));
+      // 로그인 시간 저장
+      localStorage.setItem('loginTime', Date.now());
+
       window.location.href = 'index.html';
     } catch (err) {
       UI.showToast(err.message || '로그인에 실패했습니다.', 'error');
