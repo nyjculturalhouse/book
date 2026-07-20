@@ -7,12 +7,25 @@
 
 (function authGuard() {
   const isLoginPage = location.pathname.endsWith('login.html');
-  const user = JSON.parse(localStorage.getItem('sosoUser') || 'null');
 
-  if (!user && !isLoginPage) {
+  const user = JSON.parse(localStorage.getItem('sosoUser') || 'null');
+  const loginTime = Number(localStorage.getItem('loginTime') || 0);
+
+  const LIMIT = 10 * 60 * 1000; // 10분
+
+  // 로그인 만료
+  if (user && loginTime && (Date.now() - loginTime > LIMIT)) {
+    localStorage.removeItem('sosoUser');
+    localStorage.removeItem('loginTime');
+  }
+
+  const currentUser = JSON.parse(localStorage.getItem('sosoUser') || 'null');
+
+  if (!currentUser && !isLoginPage) {
     location.href = 'login.html';
   }
-  if (user && isLoginPage) {
+
+  if (currentUser && isLoginPage) {
     location.href = 'index.html';
   }
 })();
