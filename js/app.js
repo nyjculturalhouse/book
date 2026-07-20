@@ -31,8 +31,42 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 📌 [공통] 전역 푸터 자동 삽입 (기존 레이아웃 흐름을 해치지 않도록 body 최하단에 배치)
+
+  // 📌 [공통] 전역 푸터 자동 삽입
   injectLicenseFooter();
+
+  // ===========================
+  // 자동 로그아웃 (추가)
+  // ===========================
+  const loginTime = Number(localStorage.getItem('loginTime') || 0);
+
+  if (loginTime) {
+
+    const LIMIT = 10 * 60 * 1000;
+    const remain = LIMIT - (Date.now() - loginTime);
+
+    if (remain <= 0) {
+
+      localStorage.removeItem('sosoUser');
+      localStorage.removeItem('loginTime');
+
+      alert('로그인이 만료되었습니다.');
+
+      location.href = 'login.html';
+      return;
+    }
+
+    setTimeout(() => {
+
+      localStorage.removeItem('sosoUser');
+      localStorage.removeItem('loginTime');
+
+      alert('10분이 지나 자동 로그아웃되었습니다.');
+
+      location.href = 'login.html';
+
+    }, remain);
+  }
 
   // ---------- 로그아웃 ----------
   const logoutBtn = document.getElementById('logoutBtn');
