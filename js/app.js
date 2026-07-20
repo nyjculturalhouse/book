@@ -39,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (logoutBtn) {
     logoutBtn.classList.add('btn-bounce');
     logoutBtn.addEventListener('click', () => {
-      localStorage.removeItem('sosoUser');
-      location.href = 'login.html';
+    localStorage.removeItem('sosoUser');
+    localStorage.removeItem('loginTime');
+    location.href = 'login.html';
     });
   }
 
