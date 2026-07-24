@@ -275,6 +275,12 @@ function renderCard(book) {
 
 window.rentBook = (isbn, title) => {
   const user = JSON.parse(localStorage.getItem('sosoUser'));
+  if (!user || !user.id) {
+    UI.showModal('로그인 필요', '로그인 후 이용해주세요.', '확인', () => {
+      window.location.href = 'login.html';
+    });
+    return;
+  }
 
   const today = new Date();
   const dueDate = new Date();
@@ -290,20 +296,24 @@ window.rentBook = (isbn, title) => {
 
   UI.showModal('대여하시겠습니까?', desc, '대여', async () => {
     try {
-      await fetchAPI('rentBook', {
+      const response = await fetchAPI('rentBook', {
         userId: user.id,
         isbn
       }, 'POST');
 
+      // 만약 fetchAPI가 에러를 throw하지 않고 객체 형태로 success: false를 반환하는 구조라면 여기서 방어
+      if (response && response.success === false) {
+        throw new Error(response.message || '대여를 처리할 수 없습니다.');
+      }
+
       invalidateFetchCache();
-
       UI.showToast('대여가 완료되었습니다.');
-
       setTimeout(() => window.location.reload(), 1000);
 
     } catch (err) {
-      UI.showModal('대여 불가', err.message, '확인', () => {});
-      throw err;
+      // 서버에서 던진 에러 메시지(연체 안내 등)를 사용자에게 명확히 고지
+      const errorMessage = err.message || '대여 처리 중 오류가 발생했습니다.';
+      UI.showModal('대여 불가', `<span class="text-red-500">${UI.escapeHtml(errorMessage)}</span>`, '확인', () => {});
     }
   });
 };
