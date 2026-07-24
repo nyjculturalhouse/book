@@ -69,7 +69,11 @@ async function fetchAPI(action, params = {}, method = 'GET') {
       return await parseResponse(response);
     }
   } catch (err) {
-    // ... 에러 처리 동일 ...
+    // AbortError는 같은 액션의 새 요청이 이전 요청을 취소한 것뿐이므로 무시
+    if (err.name === 'AbortError') return;
+    // 그 외 에러(서버가 던진 연체/검증 실패 메시지 등)는 반드시 호출부로 다시 던져야
+    // rentBook 등에서 "대여 불가" 안내가 정상적으로 표시된다.
+    throw err;
   } finally {
     if (_activeControllers[action] === controller) {
       delete _activeControllers[action];
