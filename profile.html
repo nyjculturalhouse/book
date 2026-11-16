@@ -11,71 +11,20 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
 
-  <style>
-    /* ===========================
-        SUIT Font Face
-    =========================== */
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
-      font-weight: 300;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
-      font-weight: 500;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-      font-weight: 600;
-      font-display: swap;
-    }
 
-    /* ===========================
-        KookminUniversityHaeongSans Font Face
-    =========================== */
-    @font-face {
-      font-family: 'KookminUniversityHaeongSans';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
-
-    body {
-      font-family: 'Suit', sans-serif;
-      font-weight: 400;
-      letter-spacing: -0.015em;
-    }
-    input, button, select, textarea {
-      font-family: 'Suit', sans-serif;
-    }
-    .font-haeong {
-      font-family: 'KookminUniversityHaeongSans', sans-serif;
-    }
-    .font-suit {
-      font-family: 'Suit', sans-serif;
-    }
-  </style>
 
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/app.js" defer></script>
   <script src="./js/profile.js" defer></script>
+<link rel="stylesheet" href="./css/culture-theme.css">
 </head>
 
-<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
+<body class="culture-page bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
   <!-- Header -->
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="flex flex-col leading-none">
@@ -88,19 +37,19 @@
         <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
         <a href="location.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서위치</a>
         <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
-        
+
         <!-- 📌 활성화 메뉴 테마 컬러: 시맨틱 브랜드 컬러 클래스로 통일 -->
-        <a href="profile.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">내정보</a>
-        
+        <a aria-current="page" href="profile.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">내정보</a>
+
         <button id="logoutBtn" class="px-4 py-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-500 transition-all duration-200">로그아웃</button>
       </nav>
     </div>
   </header>
 
   <!-- 메인 본문 -->
-  <main class="max-w-[1400px] mx-auto px-4 py-8">
+  <main id="main-content" class="max-w-[1400px] mx-auto px-4 py-8">
 
-    <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em] mb-6">내 정보</h2>
+    <h2 class="font-suit text-[24px] font-medium tracking-[-0.025em] mb-6">내 정보</h2><p class="culture-page-description">소소책방에 등록된 회원 정보를 확인하세요.</p>
 
     <div id="profileContainer" class="bg-container rounded-xl shadow-soft p-6 mb-8">
       <div class="flex justify-center py-8">
@@ -134,8 +83,7 @@
   <!-- 📌 전역 카피라이트 라이선스 푸터 추가 -->
   <footer id="soso-license-footer" class="mt-16 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
     <p>
-      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+      남양주시 문화의집 · 소소책방<br>일상에 책 한 권, 소소책방과 함께하세요.
     </p>
   </footer>
 

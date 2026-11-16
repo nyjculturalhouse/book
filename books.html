@@ -10,73 +10,22 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
 
-  <style>
-    /* ===========================
-        SUIT Font Face
-    =========================== */
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
-      font-weight: 300;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
-      font-weight: 500;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-      font-weight: 600;
-      font-display: swap;
-    }
 
-    /* ===========================
-        KookminUniversityHaeongSans Font Face
-    =========================== */
-    @font-face {
-      font-family: 'KookminUniversityHaeongSans';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
-
-    body {
-      font-family: 'Suit', sans-serif;
-      font-weight: 400;
-      letter-spacing: -0.015em;
-    }
-    input, button, select, textarea {
-      font-family: 'Suit', sans-serif;
-    }
-    .font-haeong {
-      font-family: 'KookminUniversityHaeongSans', sans-serif;
-    }
-    .font-suit {
-      font-family: 'Suit', sans-serif;
-    }
-  </style>
 
   <script src="./js/app.js" defer></script>
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/books.js" defer></script>
+<link rel="stylesheet" href="./css/culture-theme.css">
 </head>
 
-<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
+<body class="culture-page bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
   <!-- ==========================================
        공통 헤더 영역 (Header)
        ========================================== -->
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="flex flex-col leading-none">
@@ -86,7 +35,7 @@
       <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
         <a href="index.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">홈</a>
         <!-- 📌 대여현황 활성화 탭: 시맨틱 브랜드 컬러 클래스로 통일 -->
-        <a href="books.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">도서대여</a>
+        <a aria-current="page" href="books.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">도서대여</a>
         <a href="location.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서위치</a>
         <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
         <a href="profile.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">내정보</a>
@@ -96,7 +45,8 @@
   </header>
 
 
-<main class="max-w-[1400px] mx-auto px-4 py-8">
+<main id="main-content" class="max-w-[1400px] mx-auto px-4 py-8">
+<h1 class="culture-page-title">도서대여</h1><p class="culture-page-description">읽고 싶은 책을 검색하고 대여 가능 여부를 확인하세요.</p>
 
 
 <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8">
@@ -111,7 +61,7 @@ search
 
 <input
 type="text"
-id="searchInput"
+aria-label="도서 검색" id="searchInput"
 placeholder="도서명, 저자, 출판사, ISBN"
 class="w-full h-14 pl-12 pr-5 rounded-2xl bg-container shadow-soft border-0 outline-none focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em]">
 
@@ -139,7 +89,7 @@ class="hidden">
 
 
 <select
- id="sortSelect"
+ aria-label="도서 정렬" id="sortSelect"
  class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
 
     <option value="title">제목순</option>
@@ -152,7 +102,7 @@ class="hidden">
 
 
 <select
- id="categorySelect"
+ aria-label="도서 카테고리" id="categorySelect"
  class="appearance-none h-14 pl-5 pr-12 rounded-2xl bg-white shadow-soft border-0 focus:ring-2 focus:ring-gray-300 font-suit text-[15px] font-normal tracking-[-0.015em] text-gray-700">
 
 <option value="">전체 카테고리</option>

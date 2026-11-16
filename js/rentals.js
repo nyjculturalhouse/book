@@ -101,7 +101,7 @@ function renderCurrentItem(item) {
   const safeTitleForJs = UI.escapeJs(item['제목']);
 
   return `
-    <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
+    <div class="rental-card bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
       <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -134,7 +134,7 @@ function renderHistoryItem(item) {
   const rawReturnDate = item['반납일'] !== undefined ? item['반납일'] : item['반납 일'];
 
   return `
-    <div class="bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
+    <div class="rental-card bg-container rounded-xl p-4 shadow-soft flex gap-4 items-center slide-up">
       <img src="${item['표지URL']}" class="w-16 h-24 object-cover rounded bg-surface shadow-sm shrink-0">
       <div class="flex-1 min-w-0">
         <h3 class="font-suit text-[17px] font-medium tracking-[-0.02em] text-gray-800 mb-1 truncate">

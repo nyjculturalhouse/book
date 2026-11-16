@@ -221,7 +221,7 @@ function renderCard(book) {
     : 'bg-gray-200 text-gray-400 cursor-not-allowed';
 
   return `
-    <div class="bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-all">
+    <div class="book-card catalog-card bg-container rounded-xl p-3 shadow-soft hover:shadow-lg transition-all">
       <div class="flex items-center gap-4">
 
         <!-- 책 표지 -->

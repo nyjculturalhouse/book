@@ -11,73 +11,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 <link rel="stylesheet" href="./css/style.css">
 
-<style>
-/* ===========================
-   SUIT Font
-=========================== */
-@font-face {
-  font-family:'Suit';
-  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
-  font-weight:300;
-  font-display:swap;
-}
-@font-face {
-  font-family:'Suit';
-  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-  font-weight:400;
-  font-display:swap;
-}
-@font-face {
-  font-family:'Suit';
-  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
-  font-weight:500;
-  font-display:swap;
-}
-@font-face {
-  font-family:'Suit';
-  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-  font-weight:600;
-  font-display:swap;
-}
 
-/* ===========================
-   KookminUniversityHaeongSans Font
-=========================== */
-@font-face {
-  font-family:'KookminUniversityHaeongSans';
-  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
-  font-weight:400;
-  font-display:swap;
-}
-
-body {
-  font-family:'Suit',sans-serif;
-  font-weight:400;
-  letter-spacing:-0.015em;
-}
-input, button, select, textarea {
-  font-family:'Suit',sans-serif;
-}
-.font-haeong {
-  font-family:'KookminUniversityHaeongSans',sans-serif;
-  font-weight:400;
-  letter-spacing:-0.045em;
-}
-.font-suit {
-  font-family:'Suit',sans-serif;
-}
-</style>
 
 <!-- 모듈 로드 순서 정렬 -->
 <script src="./js/api.js" defer></script>
 <script src="./js/ui.js" defer></script>
 <script src="./js/utils.js" defer></script>
 <script src="./js/app.js" defer></script>
+<link rel="stylesheet" href="./css/culture-theme.css">
 </head>
 
-<body class="bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
+<body class="culture-page bg-surface text-onSurface font-suit text-[15px] font-normal tracking-[-0.015em]">
 
   <!-- 📌 상단 네비게이션 헤더 (다른 페이지들과 동일한 max-w-[1400px] 규격 + 전체 메뉴로 통일) -->
+  <a class="skip-link" href="#main-content">본문 바로가기</a>
   <header class="bg-container shadow-soft sticky top-0 z-50">
     <div class="max-w-[1400px] mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="flex flex-col leading-none">
@@ -86,7 +33,7 @@ input, button, select, textarea {
       </a>
       <nav class="hidden md:flex items-center gap-1 font-suit text-[16px] font-medium tracking-[-0.02em]">
         <!-- 📌 홈화면 활성화 탭: 시맨틱 브랜드 컬러 클래스로 통일 -->
-        <a href="index.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">홈</a>
+        <a aria-current="page" href="index.html" class="px-4 py-2 rounded-full bg-accent-bg text-white font-medium shadow-sm">홈</a>
         <a href="books.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서대여</a>
          <a href="location.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">도서위치</a>
         <a href="rentals.html" class="px-4 py-2 rounded-full hover:bg-gray-100 hover:text-gray-900 transition-all duration-200">대여현황</a>
@@ -97,7 +44,8 @@ input, button, select, textarea {
   </header>
 
   <!-- 📌 메인 레이아웃: 헤더와 동일한 폭(max-w-[1400px])으로 통일하고, 실제 콘텐츠는 가독성을 위해 내부에서 좁은 컬럼으로 중앙 정렬 -->
-  <main class="max-w-[1400px] mx-auto px-4 py-10">
+  <main id="main-content" class="max-w-[1400px] mx-auto px-4 py-10">
+<section class="culture-hero" aria-labelledby="intro-title"><div class="culture-eyebrow">NAMYANGJU CULTURE HOUSE</div><h1 id="intro-title">일상에 책 한 권, 소소책방</h1><p>읽고 싶은 책을 찾고, 편리하게 빌려보세요.</p><span class="culture-hero-icon material-symbols-outlined" aria-hidden="true">auto_stories</span></section><h2 class="culture-section-title">주요 서비스</h2><nav class="culture-services" aria-label="주요 서비스"><a href="books.html"><span class="material-symbols-outlined" aria-hidden="true">menu_book</span><h3>도서대여</h3><p>읽고 싶은 책을 검색하고 대여하세요.</p><span class="culture-action">도서 찾아보기<span aria-hidden="true">→</span></span></a><a href="location.html"><span class="material-symbols-outlined" aria-hidden="true">location_on</span><h3>도서위치</h3><p>서가에서 책이 있는 위치를 확인하세요.</p><span class="culture-action">위치 확인하기<span aria-hidden="true">→</span></span></a><a href="rentals.html"><span class="material-symbols-outlined" aria-hidden="true">assignment</span><h3>대여현황</h3><p>빌린 책과 반납 일정을 확인하세요.</p><span class="culture-action">대여 확인하기<span aria-hidden="true">→</span></span></a></nav>
     <div class="mx-auto flex flex-col gap-16">
 
       <!-- 신간 도서 목록 -->
@@ -135,8 +83,7 @@ input, button, select, textarea {
   <!-- 📌 라이선스 푸터: id="soso-license-footer"를 명시해 app.js의 자동 삽입과 중복되지 않도록 처리 -->
   <footer id="soso-license-footer" class="mt-12 mb-24 w-full text-center text-[12px] sm:text-[14px] font-light tracking-[-0.01em] text-gray-400/90 leading-relaxed">
     <p>
-      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+      남양주시 문화의집 · 소소책방<br>일상에 책 한 권, 소소책방과 함께하세요.
     </p>
   </footer>
 

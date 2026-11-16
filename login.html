@@ -8,69 +8,17 @@
   <script src="./js/tailwind-config.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
   <link rel="stylesheet" href="./css/style.css">
-  
-  <style>
-    /* ===========================
-        SUIT Font Face
-    =========================== */
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Light.woff2') format('woff2');
-      font-weight: 300;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
-      font-weight: 500;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Suit';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Bold.woff2') format('woff2');
-      font-weight: 600;
-      font-display: swap;
-    }
 
-    /* ===========================
-        KookminUniversityHaeongSans Font Face
-    =========================== */
-    @font-face {
-      font-family: 'KookminUniversityHaeongSans';
-      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/KookminUniversityHaeongSans.woff2') format('woff2');
-      font-weight: 400;
-      font-display: swap;
-    }
 
-    body {
-      font-family: 'Suit', sans-serif;
-      font-weight: 400;
-      letter-spacing: -0.015em;
-    }
-    input, button, select, textarea {
-      font-family: 'Suit', sans-serif;
-    }
-    .font-haeong {
-      font-family: 'KookminUniversityHaeongSans', sans-serif;
-    }
-    .font-suit {
-      font-family: 'Suit', sans-serif;
-    }
-  </style>
 
   <script src="./js/api.js" defer></script>
   <script src="./js/ui.js" defer></script>
   <script src="./js/utils.js" defer></script>
   <script src="./js/app.js" defer></script>
   <script src="./js/auth.js" defer></script>
+<link rel="stylesheet" href="./css/culture-theme.css">
 </head>
-<body class="bg-surface flex items-center justify-center min-h-screen font-suit text-onSurface">
+<body class="culture-login bg-surface flex items-center justify-center min-h-screen font-suit text-onSurface">
 
   <main class="bg-container p-8 rounded-xl shadow-soft w-full max-w-sm slide-up">
     <!-- 📌 브랜드 아이덴티티: 소속기관 표기 + 로고 텍스트 컬러를 세이지 그린 테마 및 성곡해옹 폰트로 매핑 -->
@@ -89,10 +37,10 @@
     <!-- 로그인 폼 -->
     <form id="loginForm" class="flex flex-col gap-4">
       <div>
-        <input type="text" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
+        <input type="text" aria-label="아이디" id="userId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="password" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
+        <input type="password" aria-label="비밀번호" id="userPw" placeholder="비밀번호 (전화번호 뒤 4자리)" autocomplete="current-password" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->
       <button type="submit" id="loginBtn" class="w-full h-12 bg-accent-bg text-white rounded-lg font-bold hover:bg-accent-hover transition-colors mt-2 flex items-center justify-center text-[15px] shadow-sm">
@@ -103,13 +51,13 @@
     <!-- 회원가입 폼 -->
     <form id="signupForm" class="hidden flex-col gap-4">
       <div>
-        <input type="text" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
+        <input type="text" aria-label="회원가입 아이디" id="signupId" placeholder="아이디" autocomplete="username" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="text" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
+        <input type="text" aria-label="이름" id="signupName" placeholder="이름" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <div>
-        <input type="tel" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
+        <input type="tel" aria-label="전화번호" id="signupPhone" placeholder="전화번호 (예: 010-1234-5678)" class="w-full h-12 px-4 rounded-lg bg-surface border-none focus:ring-2 focus:ring-accent-bg outline-none transition-all text-[14px]" required>
       </div>
       <p class="text-xs text-gray-400 -mt-1 leading-relaxed font-light">가입 후 비밀번호는 전화번호 뒤 4자리로 자동 설정됩니다.</p>
       <!-- 📌 버튼 컬러 테마 매핑 (bg-primary -> 세이지 그린 액센트 컬러) -->

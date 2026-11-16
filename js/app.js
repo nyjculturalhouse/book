@@ -124,8 +124,7 @@ function injectLicenseFooter() {
 
   footer.innerHTML = `
     <p>
-      본 사이트는 국민대학교 KMU80 성곡해옹 폰트를 사용하고 있습니다.<br>
-      해당 폰트의 지식재산권은 국민대학교에 있으며 CC BY-ND(저작자표시-변경금지) 라이선스 조건에 따라 사용되었습니다.
+      남양주시 문화의집 · 소소책방<br>일상에 책 한 권, 소소책방과 함께하세요.
     </p>
   `;
   document.body.appendChild(footer);
